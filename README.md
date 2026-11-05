@@ -22,7 +22,8 @@ Tienda en línea de **Punto del Colchón** (Bucaramanga): catálogo de colchones
 | `GET /api/store?code=XXX` | Valida un código de descuento |
 | `POST /api/order` | Guarda un pedido (los precios se recalculan en el servidor) |
 | `POST /api/lead` | Guarda una consulta del asesor |
-| `POST /api/advisor` | Sugerencia con IA de Claude (si hay `ANTHROPIC_API_KEY`; si no, la página usa reglas) |
+| `POST /api/advisor` | Recomendación con IA de Claude al terminar las preguntas del chat (si hay `ANTHROPIC_API_KEY`; si no, reglas) |
+| `POST /api/chat` | Respuestas libres del chat del asesor con Claude (si hay `ANTHROPIC_API_KEY`; si no, respuestas integradas) |
 | `GET /api/img?id=` | Imágenes subidas desde el panel |
 | `/api/admin?action=…` | Inicio de sesión y todo lo del panel (productos, precios, inventario, pedidos, descuentos, paleta, ajustes, subir imágenes) |
 

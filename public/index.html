@@ -269,6 +269,60 @@ footer a{color:var(--on-bar)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
+<style>
+/* advisor pitch */
+.adv-pitch{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px;align-items:center;background:var(--surface);border-radius:var(--r);padding:28px}
+.adv-pitch .lede{margin-bottom:18px}
+.adv-demo{display:flex;flex-direction:column;gap:8px;background:var(--surface-2);border-radius:14px;padding:18px}
+.adv-demo .qr{display:flex;gap:6px;flex-wrap:wrap}
+.adv-demo .qr span{border:1.5px solid var(--brand-ink);color:var(--brand-ink);border-radius:999px;padding:4px 10px;font-size:13px;font-weight:600}
+/* chat */
+.bub{max-width:85%;padding:10px 13px;border-radius:16px;font-size:15px;line-height:1.45;overflow-wrap:anywhere}
+.bub.bot{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}
+.bub.me{background:var(--brand);color:var(--on-brand);border-bottom-right-radius:4px;align-self:flex-end}
+.bub p{margin:0 0 6px}.bub p:last-child{margin:0}
+.bub ul{margin:6px 0 0;padding-left:18px}
+.typing{display:inline-flex;gap:4px;padding:12px 14px}
+.typing i{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:blink 1.2s infinite}
+.typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
+@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+.chat-launch{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:35;display:flex;align-items:center;gap:10px;background:var(--brand);color:var(--on-brand);border:0;border-radius:999px;padding:8px 18px 8px 8px;box-shadow:0 10px 30px #0004;text-align:left}
+.chat-launch small{display:block;font-size:12px;opacity:.8}
+.chat-launch .chat-ava{background:var(--accent);color:#fff}
+.chat-ava{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--bar);overflow:hidden}
+.chat-ava img{width:34px;height:auto}
+.chat{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(96px + env(safe-area-inset-bottom,0px));z-index:45;width:min(400px,calc(100vw - 32px));height:min(640px,calc(100dvh - 130px));background:var(--bg);border-radius:18px;box-shadow:0 20px 60px #0005;display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line)}
+.chat-head{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bar);color:var(--on-bar)}
+.chat-head div{flex:1;min-width:0;line-height:1.25}
+.chat-head small{display:block;font-size:12px;opacity:.8}
+.chat-head .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3ccf7a;margin-right:2px}
+.chat-x{background:none;border:0;color:inherit;font-size:22px;width:34px;height:34px;border-radius:8px}
+.chat-x:hover{background:#ffffff1a}
+.chat-log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:8px;overscroll-behavior:contain}
+.chat-log > *{flex-shrink:0}
+.chat-qr{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px;justify-content:flex-end}
+.chat-qr:empty{display:none}
+.chat-qr button,.chat-qr a{border:1.5px solid var(--brand-ink);color:var(--brand-ink);background:var(--surface);border-radius:999px;padding:7px 13px;font-size:14px;font-weight:600;text-decoration:none}
+.chat-qr button:hover,.chat-qr a:hover{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+.chat-qr .wa{background:#1fa855;border-color:#1fa855;color:#fff}
+.chat-input{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line);background:var(--surface)}
+.chat-input input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:999px;padding:10px 14px;background:var(--bg)}
+.chat-input button{width:42px;height:42px;border-radius:50%;border:0;background:var(--brand);color:var(--on-brand);display:grid;place-items:center;flex:none}
+.reco-card{align-self:stretch;background:var(--surface);border:1.5px solid var(--brand-ink);border-radius:14px;overflow:hidden}
+.reco-card img{width:100%;height:150px;object-fit:cover;display:block}
+.reco-card div{padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.reco-card .tag{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.reco-card h4{margin:0;font-family:var(--display);font-weight:400;font-size:22px}
+.reco-card .pr{font-weight:700;font-variant-numeric:tabular-nums}
+.reco-card ul{margin:0;padding-left:18px;font-size:14px}
+body.chat-open .chat-launch{display:none}
+@media (max-width:640px){
+  .adv-pitch{grid-template-columns:minmax(0,1fr)}
+  .chat{right:0;bottom:0;width:100%;height:100dvh;border-radius:0;padding-top:env(safe-area-inset-top,0px)}
+  .chat-launch .chat-launch-text small{display:none}
+}
+@media (prefers-reduced-motion:reduce){.typing i{animation:none;opacity:.6}}
+</style>
 <style id="paletteStyle"></style>
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -361,28 +415,17 @@ footer a{color:var(--on-bar)}
   </section>
 
   <section class="block" id="asesor" aria-labelledby="h-adv">
-    <h2 id="h-adv">Asesor de descanso</h2>
-    <p class="lede">Cuéntanos cómo duermes. El asesor te sugiere un colchón y te lo deja listo para confirmarlo por WhatsApp con un asesor de la tienda.</p>
-    <div class="advisor">
-      <form class="form" id="advForm" novalidate>
-        <div class="field"><label for="a-name">Tu nombre</label><input id="a-name" autocomplete="name" placeholder="Ej. Laura"></div>
-        <div class="field"><label for="a-phone">Tu WhatsApp (opcional)</label><input id="a-phone" inputmode="tel" autocomplete="tel" placeholder="Ej. 300 123 4567"></div>
-        <div class="field"><label for="a-weight">Peso aproximado (kg)</label><input id="a-weight" inputmode="numeric" placeholder="Ej. 75"></div>
-        <div class="field"><label for="a-size">Medida</label><select id="a-size"><option value="">No sé todavía</option></select></div>
-        <div class="field full"><span class="lab" id="l-pos">¿Cómo duermes?</span><div class="seg" role="radiogroup" aria-labelledby="l-pos" id="a-pos"></div></div>
-        <div class="field full"><span class="lab" id="l-pain">¿Tienes alguna molestia?</span><div class="seg" role="radiogroup" aria-labelledby="l-pain" id="a-pain"></div></div>
-        <div class="field full"><span class="lab" id="l-firm">¿Qué sensación prefieres?</span><div class="seg" role="radiogroup" aria-labelledby="l-firm" id="a-firm"></div></div>
-        <div class="field"><span class="lab" id="l-who">Duermes</span><div class="seg" role="radiogroup" aria-labelledby="l-who" id="a-who"></div></div>
-        <div class="field"><label for="a-budget">Presupuesto</label><select id="a-budget"><option value="">Sin límite</option><option value="800000">Hasta $800.000</option><option value="1100000">Hasta $1.100.000</option><option value="1500000">Hasta $1.500.000</option></select></div>
-        <div class="field full"><label for="a-notes">Algo más que debamos saber</label><textarea id="a-notes" placeholder="Ej. Es para mi mamá, tiene dolor de espalda"></textarea></div>
-        <div class="full" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
-          <button class="btn primary" type="submit" id="advGo">Sugerir mi colchón</button>
-          <span class="note" id="advStatus"></span>
-        </div>
-      </form>
-      <div class="reco" id="reco" aria-live="polite">
-        <div class="who">Recomendación</div>
-        <p class="note" style="margin:0">Responde el formulario y aquí aparece el colchón que mejor te va, con las razones.</p>
+    <div class="adv-pitch">
+      <div>
+        <h2 id="h-adv">¿No sabes cuál elegir? Conversa con el asesor</h2>
+        <p class="lede">Te hace unas preguntas cortas sobre cómo duermes, responde tus dudas de precios, envío o garantía, y te recomienda el colchón que mejor te va. Cuando quieras, te pasa con un asesor de la tienda por WhatsApp con todo listo.</p>
+        <button class="btn primary" type="button" data-open-chat>Empezar a conversar</button>
+      </div>
+      <div class="adv-demo" aria-hidden="true">
+        <div class="bub bot">¿Cómo duermes casi siempre?</div>
+        <div class="qr"><span>De lado</span><span>Boca arriba</span><span>Boca abajo</span></div>
+        <div class="bub me">De lado</div>
+        <div class="bub bot">¿Sientes alguna molestia al levantarte?</div>
       </div>
     </div>
   </section>
@@ -472,6 +515,24 @@ footer a{color:var(--on-bar)}
     <p class="note" style="margin:0">Se abre WhatsApp con tu pedido listo para enviar. Un asesor confirma disponibilidad y entrega.</p>
   </aside>
 </div>
+<button class="chat-launch" id="chatLaunch" type="button" aria-controls="chat" aria-expanded="false">
+  <span class="chat-ava" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm3 6.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm5 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/></svg></span>
+  <span class="chat-launch-text"><b>¿Te ayudo a elegir?</b><small>Asesor de descanso</small></span>
+</button>
+<section class="chat" id="chat" role="dialog" aria-label="Asesor de descanso" hidden>
+  <header class="chat-head">
+    <span class="chat-ava" aria-hidden="true"><img src="/img/logo-blanco.png" alt=""></span>
+    <div><b>Asesor de descanso</b><small><i class="dot"></i> En línea · responde al instante</small></div>
+    <button class="chat-x" type="button" id="chatRestart" title="Empezar de nuevo" aria-label="Empezar de nuevo">↺</button>
+    <button class="chat-x" type="button" id="chatClose" aria-label="Cerrar chat">×</button>
+  </header>
+  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <div class="chat-qr" id="chatQr"></div>
+  <form class="chat-input" id="chatForm" autocomplete="off">
+    <input id="chatText" placeholder="Escribe tu pregunta…" aria-label="Escribe tu mensaje" maxlength="400">
+    <button type="submit" aria-label="Enviar"><svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M3 20.5 21 12 3 3.5 3 10l12 2-12 2z"/></svg></button>
+  </form>
+</section>
 <div class="toast" id="toast" hidden></div>
 
 <script>
@@ -588,11 +649,6 @@ function renderChrome(){
   const list = active();
   $("nav").innerHTML = list.map(p => `<a href="#${esc(p.slug)}" data-k="${esc(p.slug)}">${esc(p.name)}</a>`).join("") + `<a href="#asesor">Asesor</a><a href="#comparar">Comparar</a>`;
   $("models").innerHTML = list.map(p => `<a href="#${esc(p.slug)}" data-k="${esc(p.slug)}"><img src="${esc(imgOf(p))}" alt=""><span>${esc(p.name)}<small>${esc(p.short||"")}</small></span></a>`).join("");
-  // advisor size options
-  const sizeNames = [...new Set(list.flatMap(p => (p.sizes||[]).map(s => s.name + " (" + s.dims + ")")))];
-  const cur = $("a-size").value;
-  $("a-size").innerHTML = `<option value="">No sé todavía</option>` + sizeNames.map(s => `<option>${esc(s)}</option>`).join("");
-  $("a-size").value = sizeNames.includes(cur) ? cur : "";
   renderCompare();
 }
 
@@ -760,30 +816,142 @@ $("closeCart").onclick = () => $("drawer").hidden = true;
 $("drawer").addEventListener("click", e => { if(e.target.id==="drawer") $("drawer").hidden = true; });
 document.addEventListener("keydown", e => { if(e.key==="Escape") $("drawer").hidden = true; });
 
-/* ================= advisor ================= */
-const OPTS = {
-  pos: [["boca-arriba","Boca arriba"],["de-lado","De lado"],["boca-abajo","Boca abajo"],["varia","Me muevo mucho"]],
-  pain:[["ninguna","Ninguna"],["espalda","Espalda baja"],["cuello","Cuello u hombros"],["cadera","Caderas"]],
-  firm:[["suave","Suave"],["media","Media"],["firme","Firme"],["nose","No sé"]],
-  who: [["solo","Solo"],["pareja","En pareja"]]
-};
-Object.entries(OPTS).forEach(([k,list]) => {
-  $("a-"+k).innerHTML = list.map(([v,l],i) => `<label><input type="radio" name="a-${k}" value="${v}" ${i===0&&k!=="firm"?"checked":""}${k==="firm"&&v==="nose"?"checked":""}>${l}</label>`).join("");
-});
-function answers(){
-  const r = k => (document.querySelector(`input[name="a-${k}"]:checked`)||{}).value || "";
-  const lab = (k,v) => (OPTS[k].find(o=>o[0]===v)||[])[1] || "";
-  return { name: $("a-name").value.trim().slice(0,60), phone: $("a-phone").value.trim().slice(0,30), weight: parseInt($("a-weight").value)||null,
-    size: $("a-size").value, pos: lab("pos",r("pos")), pain: lab("pain",r("pain")), firm: lab("firm",r("firm")), who: lab("who",r("who")),
-    budget: Number($("a-budget").value)||null, notes: $("a-notes").value.trim().slice(0,400) };
+/* ================= advisor (conversational chat) ================= */
+// Guided questions with quick-reply options. Free text goes to Claude when the
+// store has an API key; otherwise a built-in answer set handles common questions.
+const QUESTIONS = [
+  { k:"who", text:"¿Para quién es el colchón?", opts:[["solo","Para mí"],["pareja","Para mi pareja y yo"],["hijo","Para un hijo o hija"],["mayor","Para un adulto mayor"]] },
+  { k:"pos", text:"¿Cómo duerme casi siempre?", opts:[["De lado","De lado"],["Boca arriba","Boca arriba"],["Boca abajo","Boca abajo"],["Me muevo mucho","Me muevo mucho"]] },
+  { k:"pain", text:"¿Siente alguna molestia al levantarse?", opts:[["Ninguna","Ninguna"],["Espalda baja","Espalda baja"],["Cuello u hombros","Cuello u hombros"],["Caderas","Caderas"]] },
+  { k:"weight", text:"¿Cuánto pesa más o menos? Si son dos personas, cuéntame el peso de la más pesada.", opts:[["55","Menos de 60 kg"],["70","60 a 80 kg"],["90","80 a 100 kg"],["110","Más de 100 kg"]] },
+  { k:"firm", text:"¿Cómo le gusta sentir el colchón?", opts:[["Suave","Suavecito"],["Media","Intermedio"],["Firme","Firme"],["No sé","No sé"]] },
+  { k:"size", text:"¿Qué medida necesita?", opts:null },
+  { k:"budget", text:"Última pregunta: ¿tiene un presupuesto en mente?", opts:[["800000","Hasta $800 mil"],["1100000","Hasta $1,1 millones"],["1500000","Hasta $1,5 millones"],["","Sin límite"]] }
+];
+const WHO_LABEL = { solo:"Solo", pareja:"En pareja", hijo:"Solo (hijo o hija)", mayor:"Solo (adulto mayor)" };
+let chat = { started:false, step:0, a:{}, history:[], rec:null, alts:[], free:[], busy:false };
+let aiChat = null; // null = not tried yet, false = not available
+let chain = Promise.resolve();
+const serial = fn => (chain = chain.then(fn).catch(err => console.error(err)));
+
+function sizeOpts(){ const names = [...new Set(active().flatMap(p => (p.sizes||[]).map(s => s.name + "|" + s.dims)))]; return names.map(n => { const [name,dims] = n.split("|"); return [name + " (" + dims + ")", `${name} · ${dims.replace(" cm","")}`]; }).concat([["","No sé, ayúdame"]]); }
+function openChat(){ $("chat").hidden = false; document.body.classList.add("chat-open"); $("chatLaunch").setAttribute("aria-expanded","true"); if(!chat.started){ chat.started = true; serial(startChat); } setTimeout(() => $("chatText").focus({ preventScroll:true }), 50); }
+function closeChat(){ $("chat").hidden = true; document.body.classList.remove("chat-open"); $("chatLaunch").setAttribute("aria-expanded","false"); $("chatLaunch").focus(); }
+$("chatLaunch").onclick = openChat; $("chatClose").onclick = closeChat;
+$("chatRestart").onclick = () => { chat = { started:false, step:0, a:{}, history:[], rec:null, alts:[], free:[], busy:false }; $("chatLog").innerHTML = ""; $("chatQr").innerHTML = ""; chat.started = true; serial(startChat); };
+document.addEventListener("click", e => { if(e.target.closest("[data-open-chat]")){ e.preventDefault(); openChat(); } });
+document.addEventListener("keydown", e => { if(e.key === "Escape" && !$("chat").hidden) closeChat(); });
+
+function scrollLog(){ const l = $("chatLog"); l.scrollTop = l.scrollHeight; }
+function bubble(who, html){ const d = document.createElement("div"); d.className = "bub " + who; d.innerHTML = html; $("chatLog").append(d); scrollLog(); return d; }
+function say(text){ chat.history.push({ role:"assistant", content:text }); return bubble("bot", text.split("\n").filter(Boolean).map(p => `<p>${esc(p)}</p>`).join("")); }
+function me(text){ chat.history.push({ role:"user", content:text }); bubble("me", esc(text)); }
+const wait = ms => new Promise(r => setTimeout(r, ms));
+async function typing(ms){ const t = bubble("bot typing", "<i></i><i></i><i></i>"); await wait(ms); t.remove(); }
+async function bot(text, ms){ await typing(ms || Math.min(1400, 350 + text.length * 12)); return say(text); }
+// quick replies: [{label, run}] or [{label, href}] for links
+function replies(list){
+  const q = $("chatQr"); q.innerHTML = "";
+  (list||[]).forEach(o => {
+    const el = document.createElement(o.href ? "a" : "button");
+    el.textContent = o.label;
+    if(o.href){ el.href = o.href; el.target = "_blank"; el.rel = "noopener"; if(o.wa) el.className = "wa"; el.addEventListener("click", () => o.run && o.run()); }
+    else { el.type = "button"; el.addEventListener("click", () => { q.innerHTML = ""; serial(o.run); }); }
+    q.append(el);
+  });
+  scrollLog();
 }
-function sizeFor(p, a){
-  const want = (a.size||"").split(" (")[0];
-  return (p.sizes||[]).find(s => s.name === want && s.stock !== 0) || (p.sizes||[]).find(s => s.id === (a.who==="En pareja"?"doble":"sencillo") && s.stock !== 0) || (p.sizes||[]).find(s => s.stock !== 0) || (p.sizes||[])[0];
+function waSummaryLink(){
+  const a = chat.a, p = chat.rec && bySlug(chat.rec.slug), sz = chat.rec && chat.rec.sz;
+  const msg = `Hola ${SETTINGS.storeName}, hablé con el asesor de la página.\n\nMis datos:\n• Para: ${WHO_LABEL[a.who]||"-"}\n• Duermo: ${a.pos||"-"}\n• Molestia: ${a.pain||"-"}\n• Peso aprox.: ${a.weightLabel||"-"}\n• Prefiero: ${a.firm||"-"}\n• Medida: ${a.size||"no sé"}\n• Presupuesto: ${a.budget? cop(a.budget):"sin límite"}`
+    + (chat.free.length ? `\n• Preguntas: ${chat.free.slice(-3).join(" / ")}` : "")
+    + (p ? `\n\nMe recomendó: Colchón ${p.name}${sz ? " " + sz.name + " (" + sz.dims + ") a " + cop(sz.price) : ""}.` : "")
+    + `\n¿Me ayudan?`;
+  return waLink(msg);
 }
-function ruleBased(a){
-  const list = active();
-  const scored = list.map(p => {
+const waOption = () => ({ label:"Hablar con un asesor por WhatsApp", href: waSummaryLink(), wa:true });
+
+async function startChat(){
+  const h = new Date().getHours(), hi = h < 12 ? "¡Buenos días!" : h < 19 ? "¡Buenas tardes!" : "¡Buenas noches!";
+  await bot(`${hi} Soy el asesor de descanso de ${SETTINGS.storeName}.`, 500);
+  await bot("Te hago unas preguntas cortas y te digo qué colchón te va mejor. También puedes escribirme cualquier duda sobre precios, envíos o garantía.", 900);
+  await ask();
+}
+async function ask(){
+  const q = QUESTIONS[chat.step];
+  if(!q) return recommend();
+  await bot(q.text);
+  const opts = q.opts || sizeOpts();
+  replies(opts.map(([v,l]) => ({ label:l, run: () => answer(q, v, l) })));
+}
+async function answer(q, v, l){
+  if(QUESTIONS[chat.step] !== q) return; // already answered
+  $("chatQr").innerHTML = "";
+  me(l);
+  if(q.k === "weight"){ chat.a.weight = Number(v); chat.a.weightLabel = l; }
+  else if(q.k === "budget") chat.a.budget = Number(v) || null;
+  else chat.a[q.k] = v;
+  chat.step++;
+  const ack = {
+    pain: { "Espalda baja":"Entiendo, el soporte va a ser clave para ti.", "Cuello u hombros":"Anotado. Ahí ayuda mucho una capa superior más suave.", "Caderas":"Anotado. Conviene algo que reciba bien las caderas." },
+    pos: { "De lado":"Perfecto, de lado se cargan hombros y caderas.", "Boca abajo":"Bien, boca abajo conviene un apoyo más firme." }
+  }[q.k]?.[v];
+  if(ack) await bot(ack, 600);
+  await ask();
+}
+function toRuleAnswers(){ const a = chat.a; return { weight:a.weight||null, size:a.size||"", pos:a.pos||"", pain:a.pain||"", firm:a.firm==="No sé"?"No sé":a.firm||"", who: a.who==="pareja"?"En pareja":"Solo", budget:a.budget||null, notes: chat.free.join(" / ").slice(0,400), name:"", phone:"" }; }
+async function recommend(){
+  chat.busy = true;
+  await bot("Listo, con eso ya puedo recomendarte. Déjame revisar el catálogo…", 700);
+  const a = toRuleAnswers();
+  let rec = null;
+  try { rec = await aiSuggest(a); } catch(e){}
+  const ranked = rankProducts(a);
+  if(!rec && ranked[0]) rec = { slug: ranked[0].p.slug, reasons: reasonsFor(ranked[0].p, a), tip: "", by:"reglas" };
+  chat.busy = false;
+  if(!rec){ await bot("Ahora mismo no tengo colchones disponibles para recomendar. Escríbele a un asesor y te ayuda."); replies([waOption()]); return; }
+  chat.alts = ranked.map(x => x.p.slug).filter(s => s !== rec.slug);
+  await showRec(rec, a);
+  saveLead({ ...a, name:"", phone:"" }, bySlug(rec.slug), chat.rec.sz, rec);
+}
+async function showRec(rec, a){
+  const p = bySlug(rec.slug); const sz = (p.sizes||[]).find(s => s.name === rec.size) || sizeFor(p, a);
+  chat.rec = { slug:p.slug, sz };
+  await typing(900);
+  const card = document.createElement("div"); card.className = "reco-card";
+  card.innerHTML = `<img src="${esc(imgOf(p))}" alt="Colchón ${esc(p.name)}"><div><span class="tag">${rec.by === "ia" ? "Mi recomendación" : "Te recomiendo"}</span><h4>Colchón ${esc(p.name)}</h4>
+    ${sz ? `<span class="pr">${esc(sz.name)} · ${esc(sz.dims)} · ${cop(sz.price)}${sz.was > sz.price ? ` <s class="note">${cop(sz.was)}</s>` : ""}</span>` : ""}
+    <ul>${(rec.reasons||[]).map(r => `<li>${esc(r)}</li>`).join("")}</ul>${rec.tip ? `<span class="note">${esc(rec.tip)}</span>` : ""}</div>`;
+  $("chatLog").append(card); scrollLog();
+  chat.history.push({ role:"assistant", content:`Recomendé el Colchón ${p.name}${sz ? " " + sz.name : ""}.` });
+  await bot("¿Qué quieres hacer ahora?", 500);
+  afterRecReplies();
+}
+function afterRecReplies(){
+  const p = bySlug(chat.rec.slug), sz = chat.rec.sz;
+  const opts = [ waOption(),
+    { label:"Agregar al carrito", run: () => { me("Agregar al carrito"); addRecToCart(); } },
+    { label:"Ver el colchón", run: () => { me("Ver el colchón"); location.hash = p.slug; closeChat(); } } ];
+  if(chat.alts.length) opts.push({ label:"¿Y otra opción?", run: () => { me("¿Y otra opción?"); showAlt(); } });
+  opts.push({ label:"Empezar de nuevo", run: () => $("chatRestart").click() });
+  replies(opts);
+}
+async function addRecToCart(){
+  const p = bySlug(chat.rec.slug), sz = chat.rec.sz; if(!p || !sz) return;
+  const id = p.slug + "-" + sz.id, ex = cart.find(c => c.key === id);
+  ex ? ex.qty += 1 : cart.push({ key:id, slug:p.slug, sizeId:sz.id, name:`Colchón ${p.name} ${sz.name} (${sz.dims})`, price:sz.price, qty:1 });
+  saveLocal("pdc-cart", cart); drawCart();
+  await bot(`Listo, agregué el Colchón ${p.name} ${sz.name} a tu carrito. Cuando quieras, ábrelo arriba a la derecha para finalizar el pedido por WhatsApp.`);
+  replies([{ label:"Ver mi carrito", run: () => { closeChat(); $("drawer").hidden = false; } }, waOption()]);
+}
+async function showAlt(){
+  const slug = chat.alts.shift(); const p = bySlug(slug); const a = toRuleAnswers();
+  if(!p){ await bot("Esa es la opción que mejor te va con lo que me contaste."); afterRecReplies(); return; }
+  await bot(`Otra buena opción es el ${p.name}:`, 600);
+  await showRec({ slug, reasons: reasonsFor(p, a), tip:"", by:"reglas" }, a);
+}
+function rankProducts(a){
+  return active().map(p => {
     let s = 0; const lvl = Number(p.firm?.level)||3, pillow = /pillow/i.test((p.chips||[]).join(" ")), ortho = /ortop/i.test(JSON.stringify(p.specs||[]) + (p.firm?.text||""));
     if(a.weight && a.weight >= 90) s += lvl >= 5 ? 3 : lvl >= 4 ? 1 : -1;
     if(a.pain === "Espalda baja") s += ortho ? 3 : lvl >= 5 ? 2 : 0;
@@ -791,45 +959,90 @@ function ruleBased(a){
     if(a.firm === "Firme") s += lvl >= 5 ? 3 : lvl >= 4 ? 1 : 0;
     if(a.firm === "Suave" || a.firm === "Media") s += pillow ? 2 : -2;
     if(a.pos === "Boca abajo") s += lvl >= 5 ? 2 : 0;
+    if(chat.a.who === "mayor") s += pillow && ortho ? 2 : 0;
     const sz = sizeFor(p, a); if(a.budget && sz && sz.price > a.budget) s -= 4;
     return { p, s, sz };
   }).sort((x,y) => y.s - x.s);
-  const best = scored[0]; if(!best) return null;
-  const reasons = [];
-  if(a.pain === "Espalda baja") reasons.push("Tiene soporte ortopédico firme, que ayuda con el dolor de espalda baja.");
-  if(a.weight && a.weight >= 90) reasons.push("Su estructura aguanta bien el peso sin hundirse.");
-  if(/pillow/i.test((best.p.chips||[]).join(" "))) reasons.push("El pillow de 7 cm da suavidad en hombros y caderas.");
-  if(Number(best.p.firm?.level) >= 5) reasons.push("Es el más firme de la tienda: ideal si te gusta sentir el apoyo.");
-  if(reasons.length < 2) reasons.push(`Firmeza ${best.p.firm?.text?.toLowerCase()} y ${best.p.warranty?.[0]?.toLowerCase()}.`);
-  return { slug: best.p.slug, size: best.sz?.name, reasons: reasons.slice(0,3), tip: "Confirma la medida con un asesor por WhatsApp antes de pagar.", by: "reglas" };
+}
+function reasonsFor(p, a){
+  const r = [], lvl = Number(p.firm?.level)||3, pillow = /pillow/i.test((p.chips||[]).join(" ")), ortho = /ortop/i.test(JSON.stringify(p.specs||[]) + (p.firm?.text||""));
+  if(a.pain === "Espalda baja" && (ortho || lvl >= 5)) r.push("Su soporte firme ayuda a mantener la espalda baja bien apoyada.");
+  if(a.weight && a.weight >= 90 && lvl >= 4) r.push("Aguanta bien el peso sin hundirse con el tiempo.");
+  if(pillow && (a.pos === "De lado" || a.pain === "Cuello u hombros" || a.pain === "Caderas")) r.push("El pillow de 7 cm recibe hombros y caderas cuando duermes de lado.");
+  if(lvl >= 5 && (a.firm === "Firme" || a.pos === "Boca abajo")) r.push("Es el más firme de la tienda, ideal si te gusta sentir el apoyo.");
+  if(pillow && (a.firm === "Suave" || a.firm === "Media")) r.push("Tiene una capa superior más suave sin perder el soporte.");
+  const sz = sizeFor(p, a); if(a.budget && sz && sz.price <= a.budget) r.push(`En ${sz.name} queda dentro de tu presupuesto: ${cop(sz.price)}.`);
+  if(r.length < 2) r.push(`Firmeza ${String(p.firm?.text||"").toLowerCase()} y ${String(p.warranty?.[0]||"").toLowerCase()}.`);
+  return r.slice(0,3);
+}
+function sizeFor(p, a){
+  const want = (a.size||"").split(" (")[0];
+  const pref = a.who === "En pareja" ? "doble" : "sencillo";
+  return (p.sizes||[]).find(s => s.name === want && s.stock !== 0) || (p.sizes||[]).find(s => s.id === pref && s.stock !== 0) || (p.sizes||[]).find(s => s.stock !== 0) || (p.sizes||[])[0];
 }
 async function aiSuggest(a){
   const r = await api("/api/advisor", { body: { answers: a } });
   if(!r || !bySlug(r.slug) || !Array.isArray(r.reasons)) return null;
   return r;
 }
-$("advForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  const a = answers(), btn = $("advGo");
-  btn.disabled = true; $("advStatus").textContent = "El asesor está pensando…";
-  let rec = null;
-  try { rec = await aiSuggest(a); } catch(err){ /* fall back to the rule set */ }
-  if(!rec) rec = ruleBased(a);
-  btn.disabled = false; $("advStatus").textContent = "";
-  if(!rec){ $("reco").innerHTML = `<p class="note">No hay colchones activos para recomendar.</p>`; return; }
-  const p = bySlug(rec.slug), sz = (p.sizes||[]).find(s => s.name === rec.size) || sizeFor(p, a);
-  const msg = `Hola ${SETTINGS.storeName}, usé el asesor de descanso.\n\nMis datos:\n• Nombre: ${a.name||"-"}\n• Peso: ${a.weight? a.weight+" kg":"-"}\n• Duermo: ${a.pos} · ${a.who}\n• Molestia: ${a.pain}\n• Prefiero: ${a.firm}\n• Medida: ${a.size||"no sé"}\n• Presupuesto: ${a.budget? cop(a.budget):"sin límite"}${a.notes? "\n• Notas: "+a.notes:""}\n\nMe sugirió: Colchón ${p.name} ${sz?sz.name+" ("+sz.dims+") a "+cop(sz.price):""}.\n¿Me ayudan a confirmarlo?`;
-  $("reco").className = "reco ready";
-  $("reco").innerHTML = `<div class="who">${rec.by === "ia" ? "Sugerencia del asesor con IA" : "Sugerencia del asesor"}</div>
-    <img src="${esc(imgOf(p))}" alt="Colchón ${esc(p.name)}">
-    <h3 style="font-size:26px">Colchón ${esc(p.name)}${sz?` <span class="note" style="font-family:var(--body)">${esc(sz.name)} · ${cop(sz.price)}</span>`:""}</h3>
-    <ul>${rec.reasons.map(r=>`<li>${esc(r)}</li>`).join("")}</ul>
-    ${rec.tip?`<p class="note" style="margin:0">${esc(rec.tip)}</p>`:""}
-    <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn wa" href="${esc(waLink(msg))}" target="_blank" rel="noopener">Enviar a un asesor por WhatsApp</a><a class="btn" href="#${esc(p.slug)}">Ver el colchón</a></div>`;
-  saveLead(a, p, sz, rec);
-});
 async function saveLead(a, p, sz, rec){
   try { await api("/api/lead", { body: { answers: a, suggestion: { slug: p.slug, name: p.name, size: sz?.name || "", price: sz?.price || 0, reasons: rec.reasons, by: rec.by } } }); } catch(e){}
+}
+
+/* free text */
+$("chatForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const text = $("chatText").value.trim(); if(!text) return;
+  $("chatText").value = ""; $("chatQr").innerHTML = "";
+  serial(() => handleText(text));
+});
+async function handleText(text){
+  $("chatQr").innerHTML = "";
+  me(text); chat.free.push(text.slice(0,120));
+  chat.busy = true;
+  let handled = false;
+  if(aiChat !== false){
+    const t = bubble("bot typing", "<i></i><i></i><i></i>");
+    try {
+      const r = await api("/api/chat", { body: { history: chat.history.slice(-16), answers: chat.a, step: chat.step } });
+      t.remove();
+      if(r && r.reply){
+        aiChat = true; handled = true; say(r.reply);
+        if(r.recommend_slug && bySlug(r.recommend_slug)){ chat.busy = false; chat.step = QUESTIONS.length; chat.alts = rankProducts(toRuleAnswers()).map(x => x.p.slug).filter(s => s !== r.recommend_slug); await showRec({ slug:r.recommend_slug, size:r.recommend_size, reasons:r.reasons||[], tip:"", by:"ia" }, toRuleAnswers()); return; }
+        chat.busy = false;
+        const extra = (r.options||[]).slice(0,4).map(o => ({ label:o, run: () => { $("chatText").value = o; $("chatForm").requestSubmit(); } }));
+        if(chat.step < QUESTIONS.length) { const q = QUESTIONS[chat.step]; replies([...extra, ...(q.opts || sizeOpts()).map(([v,l]) => ({ label:l, run: () => answer(q, v, l) }))].slice(0,7)); }
+        else replies([...extra, waOption()]);
+        return;
+      }
+      aiChat = false;
+    } catch(err){ t.remove(); }
+  }
+  if(!handled) await faq(text);
+  chat.busy = false;
+}
+function norm(s){ return s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,""); }
+async function faq(text){
+  const t = norm(text), list = active();
+  const named = list.find(p => t.includes(norm(p.name)));
+  const dbl = p => (p.sizes||[]).find(s => s.id === "doble") || (p.sizes||[])[0];
+  let ans = null;
+  if(named && /precio|cuesta|vale|valor|cuanto/.test(t)) ans = `El ${named.name} va desde ${cop(Math.min(...(named.sizes||[]).map(s=>s.price)))}.\n` + (named.sizes||[]).map(s => `${s.name} (${s.dims}): ${cop(s.price)}`).join("\n");
+  else if(named) ans = `El ${named.name}: ${named.eyebrow || named.short}. ${(named.chips||[]).join(", ")}. ${named.warranty?.[0] || ""}.`;
+  else if(/precio|cuesta|vale|valor|cuanto|barato|econom/.test(t)) ans = "Estos son los precios en medida doble (140 × 190):\n" + list.map(p => `${p.name}: ${cop(dbl(p).price)}`).join("\n") + "\nSi me dices la medida, te doy el precio exacto.";
+  else if(/envio|domicilio|entrega|llega|despacho|flete/.test(t)) ans = `${SETTINGS.announcement || "Hacemos envíos en el área metropolitana de Bucaramanga."}\nEntregamos en 24 a 48 horas. Para otros municipios un asesor te cotiza el envío.`;
+  else if(/garantia|dura|vida util/.test(t)) ans = list.map(p => `${p.name}: ${p.warranty?.[0] || "con garantía"} (${p.warranty?.[1] || ""})`).join("\n");
+  else if(/pago|pagar|tarjeta|cuota|contra ?entrega|transferencia|nequi|daviplata|credito/.test(t)) ans = "Puedes pagar contra entrega, por transferencia o con tarjeta de crédito en la tienda, hasta 6 cuotas.";
+  else if(/medida|tamano|king|queen|doble|sencill|semidoble|cm/.test(t)) ans = "Manejamos estas medidas:\n" + [...new Set(list.flatMap(p => (p.sizes||[]).map(s => `${s.name}: ${s.dims}`)))].join("\n");
+  else if(/donde|direccion|ubica|tienda|local|horario|abren|atienden/.test(t)) ans = "Estamos en Bucaramanga, Santander. Atendemos de lunes a sábado de 9:00 a 19:00.";
+  else if(/whats|asesor|humano|persona|llamar|telefono|celular|contacto/.test(t)) ans = "Claro, te paso con un asesor de la tienda por WhatsApp. Le llega el resumen de lo que hemos hablado.";
+  else if(/dolor|espalda|columna|ortoped/.test(t)) ans = "Para dolor de espalda conviene un colchón con buen soporte. El Orion y el Sueño Flex son ortopédicos, y el Támesis es extra firme. Con las preguntas te digo cuál te va mejor.";
+  else if(/hola|buenas|buenos/.test(t)) ans = "¡Hola! Con gusto te ayudo.";
+  else if(/gracias/.test(t)) ans = "¡Con gusto! Aquí estoy si necesitas algo más.";
+  await bot(ans || "No estoy seguro de haberte entendido. Puedo ayudarte con precios, medidas, envíos, garantía y formas de pago, o te paso con un asesor por WhatsApp.");
+  if(chat.step < QUESTIONS.length && chat.started){ const q = QUESTIONS[chat.step]; await bot("Sigamos. " + q.text, 500); replies([...(q.opts || sizeOpts()).map(([v,l]) => ({ label:l, run: () => answer(q, v, l) })), waOption()]); }
+  else if(chat.rec) afterRecReplies();
+  else replies([waOption()]);
 }
 
 /* ================= dashboard ================= */
@@ -1085,6 +1298,7 @@ function route(){
   document.body.classList.toggle("store", !dash);
   if(dash){ renderGate(); return; }
   if(palDraft){ palDraft = null; applyPalette(SETTINGS.palette); }
+  if(h === "asesor") openChat();
   if(bySlug(h) && bySlug(h).status !== "borrador" && h !== key){ key = h; renderModel(); window.scrollTo({ top:0 }); }
   else if(!m) renderModel();
 }

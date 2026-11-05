@@ -1,0 +1,455 @@
+{
+  "settings": {
+    "storeName": "Punto del Colchón",
+    "whatsapp": "573504762779",
+    "announcement": "Envío gratis en Bucaramanga, Floridablanca, Girón y Piedecuesta · Paga contra entrega",
+    "pillow": {
+      "name": "Almohada viscoelástica",
+      "price": 89900
+    },
+    "palette": {
+      "brand": "#1f2a4d",
+      "accent": "#e9935a",
+      "sale": "#b8322a",
+      "bar": "#0b0b0c"
+    }
+  },
+  "products": [
+    {
+      "slug": "tamesis",
+      "order": 1,
+      "status": "activo",
+      "name": "Támesis",
+      "short": "Extra firme",
+      "eyebrow": "Colchón de espuma · Extra firme",
+      "images": [
+        "img/tamesis-caracteristicas.jpg"
+      ],
+      "chips": [
+        "Espuma 30 kg/m³",
+        "Extra firme",
+        "25 cm de altura",
+        "Sistema Flip, dos caras",
+        "Libre de CFC"
+      ],
+      "firm": {
+        "level": 5,
+        "text": "Extra firme"
+      },
+      "warranty": [
+        "Garantía 5 años",
+        "en estructura y espuma"
+      ],
+      "height": "25 cm · dos caras (Sistema Flip)",
+      "sizes": [
+        {
+          "id": "sencillo",
+          "name": "Sencillo",
+          "dims": "100 × 190 cm",
+          "price": 649900,
+          "was": 999900,
+          "stock": 10
+        },
+        {
+          "id": "semidoble",
+          "name": "Semidoble",
+          "dims": "120 × 190 cm",
+          "price": 749900,
+          "was": 1149900,
+          "stock": 10
+        },
+        {
+          "id": "doble",
+          "name": "Doble",
+          "dims": "140 × 190 cm",
+          "price": 849900,
+          "was": 1299900,
+          "stock": 10
+        },
+        {
+          "id": "queen",
+          "name": "Queen",
+          "dims": "160 × 190 cm",
+          "price": 1049900,
+          "was": 1599900,
+          "stock": 10
+        },
+        {
+          "id": "king",
+          "name": "King",
+          "dims": "200 × 200 cm",
+          "price": 1349900,
+          "was": 2049900,
+          "stock": 10
+        }
+      ],
+      "specs": [
+        {
+          "k": "Tipo de colchón",
+          "v": "Espuma (sin resortes)"
+        },
+        {
+          "k": "Núcleo",
+          "v": "Espuma de poliuretano flexible de alta densidad, 30 kg/m³"
+        },
+        {
+          "k": "Capa de confort",
+          "v": "Espuma aglomerada (casata)"
+        },
+        {
+          "k": "Tapizado",
+          "v": "Tela Jacquard belga totalmente matelaseada"
+        },
+        {
+          "k": "Costados",
+          "v": "Tela acolchada en rombo, azul marino, con emblema bordado"
+        },
+        {
+          "k": "Firmeza",
+          "v": "Extra firme"
+        },
+        {
+          "k": "Altura",
+          "v": "25 cm"
+        },
+        {
+          "k": "Peso máximo",
+          "v": "Hasta 100 kg por persona"
+        },
+        {
+          "k": "Caras",
+          "v": "Sistema Flip: dos caras, se voltea y se rota"
+        },
+        {
+          "k": "Otros",
+          "v": "Libre de CFC"
+        },
+        {
+          "k": "Garantía",
+          "v": "5 años"
+        }
+      ],
+      "desc": [
+        "El Támesis es un colchón de espuma extra firme, pensado para quien necesita buen soporte en la espalda. Su núcleo de espuma de alta densidad (30 kg/m³) mantiene la columna alineada y no se hunde con el uso diario.",
+        "Lleva una capa de espuma aglomerada (casata) que reparte el peso del cuerpo, tapizado en tela Jacquard belga matelaseada y costados azules acolchados en rombo.",
+        "Con el Sistema Flip puedes voltearlo y rotarlo, porque tiene dos caras de uso. Mide 25 cm de alto, soporta hasta 100 kg por persona y es libre de CFC."
+      ],
+      "care": [
+        "Voltéalo y gíralo de cabecera a pies cada 3 meses (Sistema Flip).",
+        "Úsalo sobre una base firme y plana."
+      ],
+      "layers": [
+        {
+          "h": 30,
+          "color": "#d6d9e0",
+          "name": "Jacquard belga matelaseado",
+          "text": "Superficie suave y fresca, acolchada en ondas. Igual en ambas caras."
+        },
+        {
+          "h": 46,
+          "color": "#e7b8c4",
+          "fleck": true,
+          "name": "Espuma aglomerada (casata)",
+          "text": "Capa compacta que reparte el peso y da cuerpo."
+        },
+        {
+          "h": 96,
+          "color": "#e9935a",
+          "name": "Núcleo de alta densidad",
+          "text": "Espuma de 30 kg/m³. Soporte extra firme que alinea la columna."
+        }
+      ],
+      "border": {
+        "color": "#1f2a4d",
+        "name": "Costados reforzados",
+        "text": "Tela acolchada en rombo que mantiene la forma del borde."
+      },
+      "compare": {
+        "caras": "Dos (Sistema Flip)",
+        "soporte": "Espuma 30 kg/m³ + casata"
+      }
+    },
+    {
+      "slug": "orion",
+      "order": 2,
+      "status": "activo",
+      "name": "Orion",
+      "short": "Ortopédico especial",
+      "eyebrow": "Colchón ortopédico especial · 1 pillow",
+      "images": [
+        "img/orion-caracteristicas.jpg"
+      ],
+      "chips": [
+        "Ortopédico especial",
+        "1 pillow de 7 cm",
+        "Doble estructura interior",
+        "34 cm de altura",
+        "Tela jacquard"
+      ],
+      "firm": {
+        "level": 4,
+        "text": "Ortopédico especial"
+      },
+      "warranty": [
+        "Garantía 5 años",
+        "en estructura interna"
+      ],
+      "height": "34 cm · una cara",
+      "sizes": [
+        {
+          "id": "sencillo",
+          "name": "Sencillo",
+          "dims": "100 × 190 cm",
+          "price": 879900,
+          "was": 1299900,
+          "stock": 10
+        },
+        {
+          "id": "semidoble",
+          "name": "Semidoble",
+          "dims": "120 × 190 cm",
+          "price": 989900,
+          "was": 1449900,
+          "stock": 10
+        },
+        {
+          "id": "doble",
+          "name": "Doble",
+          "dims": "140 × 190 cm",
+          "price": 1099900,
+          "was": 1599900,
+          "stock": 10
+        },
+        {
+          "id": "queen",
+          "name": "Queen",
+          "dims": "160 × 190 cm",
+          "price": 1289900,
+          "was": 1899900,
+          "stock": 10
+        },
+        {
+          "id": "king",
+          "name": "King",
+          "dims": "200 × 200 cm",
+          "price": 1599900,
+          "was": 2349900,
+          "stock": 10
+        }
+      ],
+      "specs": [
+        {
+          "k": "Tipo de colchón",
+          "v": "Ortopédico especial"
+        },
+        {
+          "k": "Estructura",
+          "v": "Doble estructura interior: núcleo de casata de alta densidad con capas de espuma arriba y abajo"
+        },
+        {
+          "k": "Pillow",
+          "v": "1 pillow de 7 cm (una cara de uso)"
+        },
+        {
+          "k": "Tapizado",
+          "v": "Tela jacquard acolchada en capitoné"
+        },
+        {
+          "k": "Altura",
+          "v": "34 cm"
+        },
+        {
+          "k": "Peso recomendado",
+          "v": "Hasta 100 kg aprox. por persona"
+        },
+        {
+          "k": "Garantía",
+          "v": "5 años en estructura interna"
+        }
+      ],
+      "desc": [
+        "El Orion es un colchón ortopédico especial con doble estructura interior: un núcleo de casata de alta densidad acompañado por capas de espuma, que dan un soporte uniforme a toda la espalda.",
+        "Encima lleva un pillow de 7 cm que suma suavidad sin perder el apoyo ortopédico. Va tapizado en tela jacquard acolchada en capitoné.",
+        "Mide 34 cm de alto y está pensado para personas de hasta 100 kg aprox. Es de una cara: gíralo de cabecera a pies, sin voltearlo."
+      ],
+      "care": [
+        "Gíralo de cabecera a pies cada 3 meses. No lo voltees: el pillow va solo arriba.",
+        "Úsalo sobre una base firme y plana, como una base cama."
+      ],
+      "layers": [
+        {
+          "h": 26,
+          "color": "#f1f1f3",
+          "name": "Pillow de 7 cm",
+          "text": "Capa superior acolchada en tela jacquard. Suavidad al acostarte."
+        },
+        {
+          "h": 22,
+          "color": "#c8ccd6",
+          "name": "Capa de espuma superior",
+          "text": "Primera estructura: transición entre el pillow y el núcleo."
+        },
+        {
+          "h": 80,
+          "color": "#e7b8c4",
+          "fleck": true,
+          "name": "Núcleo de casata de alta densidad",
+          "text": "El soporte ortopédico. Firme, parejo y duradero."
+        },
+        {
+          "h": 22,
+          "color": "#c8ccd6",
+          "name": "Capa de espuma inferior",
+          "text": "Segunda estructura: estabiliza el núcleo desde abajo."
+        }
+      ],
+      "border": {
+        "color": "#b0246e",
+        "name": "Costados fucsia acolchados",
+        "text": "Tela con franjas que mantiene la forma del borde."
+      },
+      "compare": {
+        "caras": "Una (1 pillow)",
+        "soporte": "Doble estructura con núcleo de casata"
+      }
+    },
+    {
+      "slug": "sueno-flex",
+      "order": 3,
+      "status": "activo",
+      "name": "Sueño Flex",
+      "short": "Fabricación propia",
+      "eyebrow": "Colchón ortopédico · Fabricado por Punto del Colchón",
+      "images": [
+        "img/suenoflex-caracteristicas.jpg"
+      ],
+      "chips": [
+        "Fabricación propia",
+        "Ortopédico",
+        "1 ó 2 pillows de 7 cm",
+        "Lámina central en casata",
+        "34 cm de altura"
+      ],
+      "firm": {
+        "level": 4,
+        "text": "Ortopédico"
+      },
+      "warranty": [
+        "Garantía 5 años",
+        "fabricación propia"
+      ],
+      "height": "34 cm · 1 ó 2 pillows",
+      "sizes": [
+        {
+          "id": "sencillo",
+          "name": "Sencillo",
+          "dims": "100 × 190 cm",
+          "price": 699900,
+          "was": 1049900,
+          "stock": 10
+        },
+        {
+          "id": "semidoble",
+          "name": "Semidoble",
+          "dims": "120 × 190 cm",
+          "price": 799900,
+          "was": 1199900,
+          "stock": 10
+        },
+        {
+          "id": "doble",
+          "name": "Doble",
+          "dims": "140 × 190 cm",
+          "price": 899900,
+          "was": 1349900,
+          "stock": 10
+        },
+        {
+          "id": "queen",
+          "name": "Queen",
+          "dims": "160 × 190 cm",
+          "price": 1099900,
+          "was": 1649900,
+          "stock": 10
+        },
+        {
+          "id": "king",
+          "name": "King",
+          "dims": "200 × 200 cm",
+          "price": 1399900,
+          "was": 2099900,
+          "stock": 10
+        }
+      ],
+      "specs": [
+        {
+          "k": "Fabricante",
+          "v": "Punto del Colchón, Bucaramanga"
+        },
+        {
+          "k": "Tipo de colchón",
+          "v": "Ortopédico"
+        },
+        {
+          "k": "Pillow",
+          "v": "1 pillow (una cara) o 2 pillows (dos caras), de 7 cm cada uno"
+        },
+        {
+          "k": "Lámina central",
+          "v": "Casata (espuma aglomerada)"
+        },
+        {
+          "k": "Tapizado",
+          "v": "Tela jacquard acolchada"
+        },
+        {
+          "k": "Altura",
+          "v": "34 cm"
+        },
+        {
+          "k": "Garantía",
+          "v": "5 años"
+        }
+      ],
+      "desc": [
+        "El Sueño Flex lo fabricamos nosotros en Punto del Colchón. Es un colchón ortopédico con lámina central en casata, que da un soporte firme y parejo.",
+        "Puedes pedirlo con 1 pillow (una cara de uso) o con 2 pillows (dos caras), de 7 cm cada uno. Va tapizado en tela jacquard acolchada.",
+        "Mide 34 cm de alto y tiene garantía de 5 años."
+      ],
+      "care": [
+        "Con 2 pillows: voltéalo y gíralo cada 3 meses. Con 1 pillow: solo gíralo de cabecera a pies.",
+        "Úsalo sobre una base firme y plana."
+      ],
+      "layers": [
+        {
+          "h": 26,
+          "color": "#f1f1f3",
+          "name": "Pillow superior de 7 cm",
+          "text": "Tela jacquard acolchada. Confort al acostarte."
+        },
+        {
+          "h": 96,
+          "color": "#e7b8c4",
+          "fleck": true,
+          "name": "Lámina central en casata",
+          "text": "Soporte ortopédico firme que no se hunde."
+        },
+        {
+          "h": 26,
+          "color": "#e6e6ea",
+          "name": "Pillow inferior de 7 cm (opcional)",
+          "text": "Con 2 pillows el colchón tiene dos caras de uso."
+        }
+      ],
+      "border": {
+        "color": "#9aa0ab",
+        "name": "Costados acolchados en rombo",
+        "text": "Tela gris con el logo Sueño Flex en naranja."
+      },
+      "compare": {
+        "caras": "Una o dos (1 ó 2 pillows)",
+        "soporte": "Lámina central en casata"
+      }
+    }
+  ]
+}

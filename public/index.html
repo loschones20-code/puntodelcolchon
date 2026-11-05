@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Colchones en Bucaramanga: Támesis, Orion y Sueño Flex. Asesor de descanso, envío gratis en el área metropolitana y pedidos por WhatsApp.">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="icon" href="/img/logo-blanco.png">
+<title>Punto del Colchón</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: brand bar → store (switcher, product, layers, info, advisor, compare, reviews) | owner dashboard at #dashboard (side nav + panels). */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --surface-2:#f0f2f6; --ink:#14161c; --muted:#5b6170; --line:#dfe2e8;
+  --brand:#1f2a4d; --on-brand:#ffffff; --accent:#e9935a; --sale:#b8322a; --bar:#0b0b0c; --on-bar:#ffffff;
+  --brand-ink:var(--brand); --ok:#1d7a4e; --warn:#a86a00;
+  --display:"Young Serif", Georgia, "Times New Roman", serif;
+  --body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1116; --surface:#171a22; --surface-2:#1d212b; --ink:#eceef3; --muted:#a2a8b6; --line:#2a2f3b;
+  --brand-ink:color-mix(in srgb, var(--brand) 45%, white); --ok:#4cc08a; --warn:#e0a640; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1116; --surface:#171a22; --surface-2:#1d212b; --ink:#eceef3; --muted:#a2a8b6; --line:#2a2f3b;
+  --brand-ink:color-mix(in srgb, var(--brand) 45%, white); --ok:#4cc08a; --warn:#e0a640; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--body)}
+body.store{padding-bottom:84px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bar)}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;line-height:1.15}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+/* brand bar */
+.top{background:var(--bar);color:var(--on-bar);position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+.top .wrap{display:flex;align-items:center;gap:28px;padding-block:10px}
+.logo{display:flex;align-items:center;flex:none;text-decoration:none}
+.logo img{height:58px;width:auto;display:block}
+.top.light-bar .logo img{filter:invert(1)}
+.nav{display:flex;gap:22px;font-size:14px;letter-spacing:.02em;flex-wrap:wrap}
+.nav a{text-decoration:none;opacity:.82}.nav a:hover,.nav a[aria-current="page"]{opacity:1;text-decoration:underline;text-underline-offset:6px}
+.top-actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+.pill{background:transparent;border:1px solid color-mix(in srgb, var(--on-bar) 35%, transparent);color:var(--on-bar);border-radius:999px;padding:8px 14px;font-size:14px;display:flex;gap:8px;align-items:center;text-decoration:none}
+.pill b{background:var(--on-bar);color:var(--bar);border-radius:999px;min-width:22px;height:22px;display:inline grid;place-items:center;font-size:12px}
+.strip{background:color-mix(in srgb, var(--brand) 12%, var(--surface));color:var(--ink);font-size:13px;text-align:center}
+.strip .wrap{padding-block:8px}
+
+/* store */
+.crumbs{font-size:13px;color:var(--muted);padding-block:18px 10px}
+.crumbs a{text-decoration:none}.crumbs a:hover{text-decoration:underline}
+.models{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.models a{display:flex;align-items:center;gap:10px;text-decoration:none;border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 16px 5px 5px;font-weight:600;font-size:15px}
+.models a img{width:34px;height:34px;border-radius:50%;object-fit:cover}
+.models a small{display:block;font-weight:400;color:var(--muted);font-size:12px;line-height:1.1}
+.models a[aria-current="page"]{border-color:var(--brand-ink);box-shadow:inset 0 0 0 1px var(--brand-ink)}
+.product{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;align-items:start}
+.gallery{display:grid;grid-template-columns:72px minmax(0,1fr);gap:12px;position:sticky;top:100px}
+.thumbs{display:flex;flex-direction:column;gap:10px}
+.thumbs button{border:2px solid transparent;border-radius:8px;padding:0;overflow:hidden;background:var(--surface);aspect-ratio:1;width:72px}
+.thumbs button[aria-pressed="true"]{border-color:var(--brand-ink)}
+.thumbs img,.thumbs svg{width:100%;height:100%;object-fit:cover;display:block}
+.stage{background:var(--surface);border-radius:var(--r);overflow:hidden;max-width:100%;position:relative;min-height:200px}
+.stage img{width:100%;height:auto;display:block}
+.stage svg{width:100%;height:auto;display:block;aspect-ratio:3/4}
+.badge{position:absolute;top:14px;right:14px;background:var(--sale);color:#fff;font-weight:700;font-size:13px;padding:5px 10px;border-radius:6px}
+.buy{display:flex;flex-direction:column;gap:18px;min-width:0}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.buy h1{font-size:clamp(30px,4vw,44px)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px}
+.sku{font-size:13px;color:var(--muted)}
+.stars{color:#e3a008;letter-spacing:2px}
+.price{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;font-variant-numeric:tabular-nums}
+.price .now{font-size:34px;font-weight:700}
+.price .was{color:var(--muted);text-decoration:line-through}
+.price .off{color:var(--sale);font-weight:700;font-size:14px}
+.note{font-size:13px;color:var(--muted)}
+fieldset{border:0;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
+legend{font-weight:600;font-size:14px;margin-bottom:10px}
+.sizes{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px}
+.size{position:relative}
+.size input{position:absolute;opacity:0}
+.size label{display:flex;flex-direction:column;gap:2px;border:1.5px solid var(--line);background:var(--surface);border-radius:8px;padding:10px 12px;cursor:pointer;font-size:14px}
+.size label small{color:var(--muted);font-variant-numeric:tabular-nums}
+.size input:checked+label{border-color:var(--brand-ink);box-shadow:inset 0 0 0 1px var(--brand-ink)}
+.size input:disabled+label{opacity:.45;cursor:not-allowed;text-decoration:line-through}
+.size input:focus-visible+label{outline:3px solid var(--accent);outline-offset:2px}
+.firm{display:flex;flex-direction:column;gap:6px}
+.firm .scale{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.firm .scale span{height:8px;border-radius:2px;background:var(--line)}
+.firm .scale span.on{background:var(--brand-ink)}
+.firm .labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+.actions{display:grid;grid-template-columns:auto 1fr 1fr;gap:10px;align-items:stretch}
+.qty{display:flex;border:1.5px solid var(--line);border-radius:8px;background:var(--surface)}
+.qty button{background:none;border:0;width:38px;font-size:18px}
+.qty input{width:38px;border:0;text-align:center;background:none;font-variant-numeric:tabular-nums}
+.btn{border-radius:8px;padding:12px 16px;font-weight:600;border:1.5px solid var(--brand);text-align:center;text-decoration:none;background:transparent;color:var(--brand-ink);display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn.primary{background:var(--brand);color:var(--on-brand)}
+.btn.small{padding:7px 12px;font-size:14px}
+.btn.danger{border-color:var(--sale);color:var(--sale)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.wa{background:#1fa855;color:#fff;border-color:#1fa855}
+.perks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.perk{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;font-size:13px;display:flex;flex-direction:column;gap:2px}
+.perk b{font-size:14px}
+.addon{display:flex;gap:14px;align-items:center;border:1px dashed var(--line);border-radius:8px;padding:12px;background:var(--surface)}
+.addon svg{flex:none}
+.addon div{flex:1;min-width:0;font-size:14px}
+.addon input{width:20px;height:20px;accent-color:var(--brand)}
+section.block{padding-block:64px 0}
+.block h2{font-size:clamp(26px,3vw,36px);margin-bottom:8px}
+.lede{color:var(--muted);max-width:62ch;margin:0 0 28px}
+.layers{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:center}
+.cut{background:var(--surface);border-radius:var(--r);padding:24px;overflow-x:auto}
+.cut svg{width:100%;height:auto;display:block;min-width:300px}
+.cut svg g.layer{cursor:pointer;transition:opacity .2s}
+.cut svg.focus g.layer{opacity:.3}.cut svg.focus g.layer.active{opacity:1}
+.layerlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.layerlist button{width:100%;text-align:left;display:grid;grid-template-columns:18px 1fr;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px}
+.layerlist button[aria-pressed="true"]{border-color:var(--brand-ink)}
+.layerlist i{width:18px;height:18px;border-radius:4px;margin-top:3px}
+.layerlist b{display:block}.layerlist span{font-size:14px;color:var(--muted)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:2px solid transparent;padding:12px 16px;color:var(--muted);font-weight:600;white-space:nowrap}
+.tabs button[aria-selected="true"]{color:var(--ink);border-color:var(--brand-ink)}
+.panel{padding-block:24px;max-width:780px}
+.panel p{margin:0 0 14px;max-width:65ch}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:12px 8px 12px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500}
+.panel th{width:42%}
+.panel ul{padding-left:20px;margin:0}
+.panel li{margin-bottom:6px}
+.compare{overflow-x:auto;background:var(--surface);border-radius:var(--r);padding:8px 20px}
+.compare table{min-width:560px}
+.compare thead th{color:var(--ink);font-weight:400;font-family:var(--display);font-size:18px}
+.compare td a{font-weight:600}
+
+/* advisor */
+.advisor{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:start}
+.form{background:var(--surface);border-radius:var(--r);padding:24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.form .full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field label,.field .lab{font-size:13px;font-weight:600}
+.field input,.field select,.field textarea{border:1.5px solid var(--line);background:var(--bg);border-radius:8px;padding:10px 12px;width:100%;min-width:0}
+.field textarea{min-height:80px;resize:vertical}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg label{font-weight:500;font-size:14px;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;background:var(--bg)}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label:has(input:checked){border-color:var(--brand-ink);box-shadow:inset 0 0 0 1px var(--brand-ink)}
+.seg label:has(input:focus-visible){outline:3px solid var(--accent);outline-offset:2px}
+.reco{background:var(--surface);border-radius:var(--r);padding:24px;display:flex;flex-direction:column;gap:14px;border:1.5px solid var(--line)}
+.reco.ready{border-color:var(--brand-ink)}
+.reco img{width:100%;max-height:260px;object-fit:cover;border-radius:8px}
+.reco ul{margin:0;padding-left:20px}
+.reco .who{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+
+.reviews{display:grid;grid-template-columns:260px minmax(0,1fr);gap:32px}
+.score{font-family:var(--display);font-size:56px;line-height:1}
+.bars{display:flex;flex-direction:column;gap:6px;font-size:13px;margin-top:14px}
+.bars div{display:grid;grid-template-columns:28px 1fr 34px;gap:8px;align-items:center;font-variant-numeric:tabular-nums}
+.bars .track{height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bars .track i{display:block;height:100%;background:var(--brand-ink)}
+.review{border-bottom:1px solid var(--line);padding-block:16px}
+.review p{margin:6px 0 0}
+.review small{color:var(--muted)}
+.sample{font-size:12px;color:var(--muted);font-style:italic}
+
+footer{margin-top:72px;background:var(--bar);color:color-mix(in srgb, var(--on-bar) 80%, transparent);font-size:14px}
+footer .wrap{padding-block:36px;display:flex;gap:32px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+footer img{height:72px;width:auto}
+.top.light-bar ~ footer img{filter:invert(1)}
+footer a{color:var(--on-bar)}
+
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);z-index:30;padding-bottom:env(safe-area-inset-bottom,0px)}
+.bar .wrap{display:flex;gap:14px;align-items:center;padding-block:10px}
+.bar img{width:48px;height:48px;object-fit:cover;border-radius:6px}
+.bar .info{flex:1;min-width:0;font-size:14px;line-height:1.3}
+.bar .info b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.drawer{position:fixed;inset:0;z-index:40;display:flex;justify-content:flex-end;background:#0008}
+.drawer aside{background:var(--surface);width:min(420px,100%);height:100%;padding:24px max(20px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) 20px;display:flex;flex-direction:column;gap:14px;overflow:auto}
+.drawer header{display:flex;justify-content:space-between;align-items:center}
+.x{background:none;border:0;font-size:26px}
+.line{display:flex;gap:12px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;font-size:14px}
+.line div{flex:1;min-width:0}
+.line button{background:none;border:0;color:var(--sale);font-size:13px}
+.sum{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums}
+.sum.total{font-weight:700;font-size:18px}
+.drawer .field input,.drawer .field select{background:var(--bg)}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}
+.toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:14px;z-index:60;max-width:calc(100% - 32px)}
+
+/* dashboard */
+.dash{display:grid;grid-template-columns:220px minmax(0,1fr);gap:28px;padding-block:28px 60px;align-items:start}
+.side{position:sticky;top:100px;display:flex;flex-direction:column;gap:4px;background:var(--surface);border-radius:var(--r);padding:10px}
+.side button{text-align:left;background:none;border:0;border-radius:8px;padding:10px 12px;font-weight:600;color:var(--muted);display:flex;justify-content:space-between;align-items:center}
+.side button[aria-current="true"]{background:var(--surface-2);color:var(--ink)}
+.side .count{font-size:12px;background:var(--sale);color:#fff;border-radius:999px;padding:1px 8px}
+.side hr{border:0;border-top:1px solid var(--line);margin:6px 0}
+.dpanel{display:flex;flex-direction:column;gap:20px;min-width:0}
+.dhead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+.dhead h1{font-size:30px}
+.card{background:var(--surface);border-radius:var(--r);padding:20px;min-width:0}
+.card h3{font-size:19px;margin-bottom:12px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{background:var(--surface);border-radius:var(--r);padding:16px}
+.kpi span{font-size:13px;color:var(--muted)}
+.kpi b{display:block;font-size:26px;font-variant-numeric:tabular-nums;margin-top:4px}
+.tablewrap{overflow-x:auto}
+.tablewrap table{min-width:640px;font-size:14px}
+.tablewrap td img{width:44px;height:44px;object-fit:cover;border-radius:6px;vertical-align:middle}
+.status{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;background:var(--surface-2)}
+.status.activo,.status.entregado{background:color-mix(in srgb, var(--ok) 18%, transparent);color:var(--ok)}
+.status.borrador,.status.nuevo{background:color-mix(in srgb, var(--warn) 18%, transparent);color:var(--warn)}
+.status.cancelado{background:color-mix(in srgb, var(--sale) 15%, transparent);color:var(--sale)}
+.status.confirmado{background:color-mix(in srgb, var(--brand-ink) 18%, transparent);color:var(--brand-ink)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.sizeedit{display:grid;grid-template-columns:1.1fr 1.2fr 1fr 1fr .7fr auto;gap:6px;align-items:center}
+.sizeedit input{border:1.5px solid var(--line);background:var(--bg);border-radius:6px;padding:7px 8px;width:100%;min-width:0;font-variant-numeric:tabular-nums}
+.sizeedit .h{font-size:12px;color:var(--muted);font-weight:600}
+.imgs{display:flex;gap:10px;flex-wrap:wrap}
+.imgs figure{margin:0;position:relative;width:96px}
+.imgs img{width:96px;height:96px;object-fit:cover;border-radius:8px;display:block;background:var(--surface-2)}
+.imgs figure button{position:absolute;top:4px;right:4px;background:#000a;color:#fff;border:0;border-radius:999px;width:24px;height:24px;font-size:14px}
+.imgs figure small{display:block;font-size:11px;color:var(--muted);text-align:center}
+.swatches{display:flex;gap:10px;flex-wrap:wrap}
+.swatches button{border:1.5px solid var(--line);background:var(--surface);border-radius:10px;padding:8px;display:flex;flex-direction:column;gap:6px;align-items:flex-start;font-size:13px;font-weight:600}
+.swatches button span{display:flex;gap:3px}
+.swatches button i{width:22px;height:22px;border-radius:5px;display:block}
+.colorrow{display:flex;align-items:center;gap:10px}
+.colorrow input[type=color]{width:48px;height:38px;padding:2px;border-radius:8px;border:1.5px solid var(--line);background:var(--bg)}
+.preview{border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.preview .pbar{padding:12px 16px;display:flex;align-items:center;gap:12px}
+.preview .pbar img{height:34px}
+.preview .pbody{padding:16px;background:var(--surface);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:color-mix(in srgb, var(--sale) 10%, var(--surface));border-radius:8px;padding:10px 12px;font-size:14px}
+.empty{color:var(--muted);text-align:center;padding:28px 12px}
+.gate{max-width:520px;margin:60px auto;text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center}
+
+@media (max-width:900px){
+  .product,.layers,.reviews,.advisor{grid-template-columns:minmax(0,1fr)}
+  .gallery{position:static}
+  .dash{grid-template-columns:minmax(0,1fr)}
+  .side{position:static;flex-direction:row;overflow-x:auto}
+  .side hr{display:none}
+  .side button{white-space:nowrap}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .nav{display:none}
+  .logo img{height:46px}
+  .gallery{grid-template-columns:minmax(0,1fr)}
+  .thumbs{flex-direction:row;order:2}
+  .actions{grid-template-columns:auto 1fr}
+  .actions .wa{grid-column:1/-1}
+  .perks,.form,.grid2,.grid3{grid-template-columns:minmax(0,1fr)}
+  .bar .info small{display:none}
+  .sizeedit{grid-template-columns:1fr 1fr}
+  .sizeedit .h{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+<style id="paletteStyle"></style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<header class="top" id="topbar">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Punto del Colchón, inicio"><img src="img/logo-blanco.png" alt="Punto del Colchón · Descanso garantizado"></a>
+    <nav class="nav" id="nav" aria-label="Principal"></nav>
+    <div class="top-actions">
+      <a class="pill" id="adminLink" href="#dashboard" hidden>Panel</a>
+      <button class="pill" id="openCart" type="button">Carrito <b id="cartCount">0</b></button>
+    </div>
+  </div>
+</header>
+<div class="strip" id="strip"><div class="wrap" id="announcement">Envío gratis en Bucaramanga, Floridablanca, Girón y Piedecuesta · Paga contra entrega</div></div>
+
+<!-- ================= STORE ================= -->
+<main class="wrap" id="storeView">
+  <nav class="crumbs" aria-label="Ruta"><a href="#">Inicio</a> › <a href="#comparar">Colchones</a> › <span id="crumbName"></span></nav>
+  <nav class="models" id="models" aria-label="Elige tu colchón"></nav>
+
+  <div class="product">
+    <div class="gallery">
+      <div class="thumbs" id="thumbs" role="group" aria-label="Vistas del producto"></div>
+      <div class="stage" id="stage">
+        <span class="badge" id="offBadge"></span>
+        <img id="mainImg" alt="">
+        <svg id="stageCut" viewBox="0 0 72 96" hidden></svg>
+      </div>
+    </div>
+
+    <div class="buy">
+      <div class="eyebrow" id="eyebrow"></div>
+      <h1 id="title"></h1>
+      <div class="sku"><span class="stars" aria-hidden="true">★★★★★</span> 4.8 · <a href="#reviews">reseñas</a> · SKU <span id="sku"></span></div>
+      <div class="chips" id="chips"></div>
+      <div>
+        <div class="price"><span class="now" id="priceNow"></span><span class="was" id="priceWas"></span><span class="off" id="priceOff"></span></div>
+        <div class="note" id="stockNote">Precio web en Bucaramanga. Hasta 6 cuotas con tarjeta de crédito.</div>
+      </div>
+      <fieldset>
+        <legend>Tamaño: <span id="sizeLabel"></span></legend>
+        <div class="sizes" id="sizes"></div>
+      </fieldset>
+      <div class="firm" id="firm">
+        <b style="font-size:14px" id="firmText"></b>
+        <div class="scale" id="firmScale"></div>
+        <div class="labels"><span>Suave</span><span>Medio</span><span>Firme</span></div>
+      </div>
+      <label class="addon" for="addPillow">
+        <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true"><rect x="3" y="12" width="38" height="20" rx="9" fill="var(--surface-2)" stroke="var(--brand-ink)" stroke-width="1.5"/><path d="M9 22h26" stroke="var(--brand-ink)" stroke-width="1.2" stroke-dasharray="2 3"/></svg>
+        <div><b id="pillowName">Agrega una almohada</b><br><span class="note" id="pillowPrice"></span></div>
+        <input type="checkbox" id="addPillow">
+      </label>
+      <div class="actions">
+        <div class="qty"><button type="button" id="minus" aria-label="Quitar uno">−</button><input id="qty" type="text" inputmode="numeric" value="1" aria-label="Cantidad"><button type="button" id="plus" aria-label="Agregar uno">+</button></div>
+        <button class="btn primary" type="button" id="addCart">Agregar al carrito</button>
+        <a class="btn wa" id="waBtn" href="#" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9 0-1.4.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.1 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.6.3 0 .2 0 .8-.3 1.4Z"/></svg>
+          Comprar por WhatsApp
+        </a>
+      </div>
+      <div class="perks">
+        <div class="perk"><b id="perkWarranty"></b><span id="perkWarrantySub"></span></div>
+        <div class="perk"><b>Entrega 24–48 h</b>área metropolitana</div>
+        <div class="perk"><b>¿No sabes cuál?</b><a href="#asesor">Pregúntale al asesor</a></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="block" aria-labelledby="h-layers">
+    <h2 id="h-layers">Por dentro del <span id="layersName"></span></h2>
+    <p class="lede">Toca cada capa para ver qué hace por tu descanso.</p>
+    <div class="layers">
+      <div class="cut"><svg id="cutSvg" viewBox="0 0 520 300" role="img" aria-label="Corte del colchón por capas"></svg></div>
+      <ul class="layerlist" id="layerList"></ul>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-info">
+    <h2 id="h-info">Información del producto</h2>
+    <div class="tabs" role="tablist" id="infoTabs">
+      <button role="tab" aria-selected="true" aria-controls="p-ficha" id="t-ficha">Ficha técnica</button>
+      <button role="tab" aria-selected="false" aria-controls="p-desc" id="t-desc">Descripción</button>
+      <button role="tab" aria-selected="false" aria-controls="p-gar" id="t-gar">Garantía y cuidados</button>
+    </div>
+    <div class="panel" role="tabpanel" id="p-ficha" aria-labelledby="t-ficha"><table><tbody id="specs"></tbody></table></div>
+    <div class="panel" role="tabpanel" id="p-desc" aria-labelledby="t-desc" hidden><div id="desc"></div><p class="note">Tolerancia normal de fabricación: ±2 cm en medidas y ±1 cm en altura.</p></div>
+    <div class="panel" role="tabpanel" id="p-gar" aria-labelledby="t-gar" hidden><ul id="care"></ul></div>
+  </section>
+
+  <section class="block" id="asesor" aria-labelledby="h-adv">
+    <h2 id="h-adv">Asesor de descanso</h2>
+    <p class="lede">Cuéntanos cómo duermes. El asesor te sugiere un colchón y te lo deja listo para confirmarlo por WhatsApp con un asesor de la tienda.</p>
+    <div class="advisor">
+      <form class="form" id="advForm" novalidate>
+        <div class="field"><label for="a-name">Tu nombre</label><input id="a-name" autocomplete="name" placeholder="Ej. Laura"></div>
+        <div class="field"><label for="a-phone">Tu WhatsApp (opcional)</label><input id="a-phone" inputmode="tel" autocomplete="tel" placeholder="Ej. 300 123 4567"></div>
+        <div class="field"><label for="a-weight">Peso aproximado (kg)</label><input id="a-weight" inputmode="numeric" placeholder="Ej. 75"></div>
+        <div class="field"><label for="a-size">Medida</label><select id="a-size"><option value="">No sé todavía</option></select></div>
+        <div class="field full"><span class="lab" id="l-pos">¿Cómo duermes?</span><div class="seg" role="radiogroup" aria-labelledby="l-pos" id="a-pos"></div></div>
+        <div class="field full"><span class="lab" id="l-pain">¿Tienes alguna molestia?</span><div class="seg" role="radiogroup" aria-labelledby="l-pain" id="a-pain"></div></div>
+        <div class="field full"><span class="lab" id="l-firm">¿Qué sensación prefieres?</span><div class="seg" role="radiogroup" aria-labelledby="l-firm" id="a-firm"></div></div>
+        <div class="field"><span class="lab" id="l-who">Duermes</span><div class="seg" role="radiogroup" aria-labelledby="l-who" id="a-who"></div></div>
+        <div class="field"><label for="a-budget">Presupuesto</label><select id="a-budget"><option value="">Sin límite</option><option value="800000">Hasta $800.000</option><option value="1100000">Hasta $1.100.000</option><option value="1500000">Hasta $1.500.000</option></select></div>
+        <div class="field full"><label for="a-notes">Algo más que debamos saber</label><textarea id="a-notes" placeholder="Ej. Es para mi mamá, tiene dolor de espalda"></textarea></div>
+        <div class="full" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <button class="btn primary" type="submit" id="advGo">Sugerir mi colchón</button>
+          <span class="note" id="advStatus"></span>
+        </div>
+      </form>
+      <div class="reco" id="reco" aria-live="polite">
+        <div class="who">Recomendación</div>
+        <p class="note" style="margin:0">Responde el formulario y aquí aparece el colchón que mejor te va, con las razones.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="comparar" aria-labelledby="h-cmp">
+    <h2 id="h-cmp">Compara los colchones</h2>
+    <p class="lede">Mismo cuidado, distintas formas de descansar.</p>
+    <div class="compare"><table id="cmp"></table></div>
+  </section>
+
+  <section class="block" id="reviews" aria-labelledby="h-rev">
+    <h2 id="h-rev">Opiniones de clientes</h2>
+    <p class="sample">Reseñas de ejemplo para el diseño. Cámbialas por opiniones reales antes de publicar.</p>
+    <div class="reviews">
+      <div><div class="score">4.8</div><div class="stars" aria-hidden="true">★★★★★</div><div class="bars" id="bars"></div></div>
+      <div>
+        <div class="review"><span class="stars">★★★★★</span> <b>Firme como lo quería</b><p>Se me quitó el dolor de espalda en la primera semana. Llegó al día siguiente.</p><small>Cliente de ejemplo · Floridablanca</small></div>
+        <div class="review"><span class="stars">★★★★★</span> <b>Muy buena relación precio-calidad</b><p>La tela es fresca y los bordes no se hunden.</p><small>Cliente de ejemplo · Bucaramanga</small></div>
+        <div class="review"><span class="stars">★★★★☆</span> <b>Bueno, algo firme al inicio</b><p>Los primeros días lo sentí duro, después se acomodó.</p><small>Cliente de ejemplo · Girón</small></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= DASHBOARD ================= -->
+<main class="wrap" id="dashView" hidden>
+  <div class="gate" id="dashGate">
+    <h1 style="font-size:30px">Panel de la tienda</h1>
+    <p class="note" id="gateMsg">Comprobando tu acceso…</p>
+    <form id="loginForm" class="card" style="display:flex;flex-direction:column;gap:12px;width:100%;max-width:360px;text-align:left" hidden>
+      <div class="field"><label for="l-pass">Contraseña del dueño</label><input id="l-pass" type="password" autocomplete="current-password" required></div>
+      <button class="btn primary" type="submit">Entrar</button>
+      <span class="note" id="loginMsg" role="alert"></span>
+    </form>
+    <a class="btn" href="#">Volver a la tienda</a>
+  </div>
+  <div class="dash" id="dash" hidden>
+    <nav class="side" id="side" aria-label="Secciones del panel">
+      <button type="button" data-p="resumen" aria-current="true">Resumen</button>
+      <button type="button" data-p="productos">Productos</button>
+      <button type="button" data-p="pedidos">Pedidos <span class="count" id="newOrders" hidden></span></button>
+      <button type="button" data-p="clientes">Asesor y clientes <span class="count" id="newLeads" hidden></span></button>
+      <button type="button" data-p="descuentos">Descuentos</button>
+      <hr>
+      <button type="button" data-p="apariencia">Apariencia</button>
+      <button type="button" data-p="ajustes">Ajustes</button>
+      <hr>
+      <button type="button" id="refreshBtn">Actualizar datos</button>
+      <a class="btn small" href="#">Ver tienda</a>
+      <button type="button" id="logoutBtn">Cerrar sesión</button>
+    </nav>
+    <div id="dpanels"></div>
+  </div>
+</main>
+
+<footer id="footer">
+  <div class="wrap">
+    <img src="img/logo-blanco.png" alt="Punto del Colchón">
+    <div>Bucaramanga, Santander · Lunes a sábado 9:00–19:00<br>WhatsApp: <span id="waText"></span></div>
+    <a href="#dashboard">Administrar tienda</a>
+  </div>
+</footer>
+
+<div class="bar" id="stickyBar">
+  <div class="wrap">
+    <img id="barImg" alt="">
+    <div class="info"><b id="barName"></b><small id="barPrice"></small></div>
+    <button class="btn primary" type="button" id="barAdd">Agregar al carrito</button>
+  </div>
+</div>
+
+<div class="drawer" id="drawer" hidden>
+  <aside role="dialog" aria-modal="true" aria-labelledby="cartTitle">
+    <header><h2 id="cartTitle" style="font-size:24px">Tu carrito</h2><button class="x" type="button" id="closeCart" aria-label="Cerrar carrito">×</button></header>
+    <div id="lines"></div>
+    <div class="field"><label for="discCode">Código de descuento</label><div class="row2"><input id="discCode" placeholder="Ej. BIENVENIDO" autocomplete="off"><button class="btn small" type="button" id="discApply">Aplicar</button></div><span class="note" id="discMsg"></span></div>
+    <div class="sum"><span>Subtotal</span><span id="subTotal">$0</span></div>
+    <div class="sum" id="discRow" hidden><span>Descuento</span><span id="discAmt"></span></div>
+    <div class="sum total"><span>Total</span><span id="cartTotal">$0</span></div>
+    <h3 style="font-size:18px;margin-top:6px">Datos de entrega</h3>
+    <div class="field"><label for="c-name">Nombre</label><input id="c-name" autocomplete="name"></div>
+    <div class="field"><label for="c-phone">Celular</label><input id="c-phone" inputmode="tel" autocomplete="tel"></div>
+    <div class="field"><label for="c-addr">Dirección y barrio</label><input id="c-addr" autocomplete="street-address"></div>
+    <div class="field"><label for="c-city">Municipio</label><select id="c-city"><option>Bucaramanga</option><option>Floridablanca</option><option>Girón</option><option>Piedecuesta</option><option>Otro (se cotiza envío)</option></select></div>
+    <div class="field"><label for="c-pay">Pago</label><select id="c-pay"><option>Contra entrega</option><option>Transferencia</option><option>Tarjeta de crédito (en tienda)</option></select></div>
+    <a class="btn wa" id="waCheckout" href="#" target="_blank" rel="noopener">Finalizar pedido por WhatsApp</a>
+    <p class="note" style="margin:0">Se abre WhatsApp con tu pedido listo para enviar. Un asesor confirma disponibilidad y entrega.</p>
+  </aside>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* ================= Default catalog (used until the store's database answers, and for visitors without it) ================= */
+const DEFAULT_SETTINGS = {
+  storeName: "Punto del Colchón",
+  whatsapp: "573504762779",
+  announcement: "Envío gratis en Bucaramanga, Floridablanca, Girón y Piedecuesta · Paga contra entrega",
+  pillow: { name: "Almohada viscoelástica", price: 89900 },
+  palette: { brand: "#1f2a4d", accent: "#e9935a", sale: "#b8322a", bar: "#0b0b0c" }
+};
+const SZ = (a,b,c,d,e,f,g,h,i,j) => [
+  { id:"sencillo",  name:"Sencillo",  dims:"100 × 190 cm", price:a, was:b, stock:10 },
+  { id:"semidoble", name:"Semidoble", dims:"120 × 190 cm", price:c, was:d, stock:10 },
+  { id:"doble",     name:"Doble",     dims:"140 × 190 cm", price:e, was:f, stock:10 },
+  { id:"queen",     name:"Queen",     dims:"160 × 190 cm", price:g, was:h, stock:10 },
+  { id:"king",      name:"King",      dims:"200 × 200 cm", price:i, was:j, stock:10 }];
+const DEFAULT_PRODUCTS = [
+  { slug:"tamesis", order:1, status:"activo", name:"Támesis", short:"Extra firme",
+    eyebrow:"Colchón de espuma · Extra firme", images:["img/tamesis-caracteristicas.jpg"],
+    chips:["Espuma 30 kg/m³","Extra firme","25 cm de altura","Sistema Flip, dos caras","Libre de CFC"],
+    firm:{level:5,text:"Extra firme"}, warranty:["Garantía 5 años","en estructura y espuma"], height:"25 cm · dos caras (Sistema Flip)",
+    sizes:SZ(649900,999900,749900,1149900,849900,1299900,1049900,1599900,1349900,2049900),
+    specs:[{k:"Tipo de colchón",v:"Espuma (sin resortes)"},{k:"Núcleo",v:"Espuma de poliuretano flexible de alta densidad, 30 kg/m³"},{k:"Capa de confort",v:"Espuma aglomerada (casata)"},{k:"Tapizado",v:"Tela Jacquard belga totalmente matelaseada"},{k:"Costados",v:"Tela acolchada en rombo, azul marino, con emblema bordado"},{k:"Firmeza",v:"Extra firme"},{k:"Altura",v:"25 cm"},{k:"Peso máximo",v:"Hasta 100 kg por persona"},{k:"Caras",v:"Sistema Flip: dos caras, se voltea y se rota"},{k:"Otros",v:"Libre de CFC"},{k:"Garantía",v:"5 años"}],
+    desc:["El Támesis es un colchón de espuma extra firme, pensado para quien necesita buen soporte en la espalda. Su núcleo de espuma de alta densidad (30 kg/m³) mantiene la columna alineada y no se hunde con el uso diario.","Lleva una capa de espuma aglomerada (casata) que reparte el peso del cuerpo, tapizado en tela Jacquard belga matelaseada y costados azules acolchados en rombo.","Con el Sistema Flip puedes voltearlo y rotarlo, porque tiene dos caras de uso. Mide 25 cm de alto, soporta hasta 100 kg por persona y es libre de CFC."],
+    care:["Voltéalo y gíralo de cabecera a pies cada 3 meses (Sistema Flip).","Úsalo sobre una base firme y plana."],
+    layers:[{h:30,color:"#d6d9e0",name:"Jacquard belga matelaseado",text:"Superficie suave y fresca, acolchada en ondas. Igual en ambas caras."},{h:46,color:"#e7b8c4",fleck:true,name:"Espuma aglomerada (casata)",text:"Capa compacta que reparte el peso y da cuerpo."},{h:96,color:"#e9935a",name:"Núcleo de alta densidad",text:"Espuma de 30 kg/m³. Soporte extra firme que alinea la columna."}],
+    border:{color:"#1f2a4d",name:"Costados reforzados",text:"Tela acolchada en rombo que mantiene la forma del borde."},
+    compare:{caras:"Dos (Sistema Flip)",soporte:"Espuma 30 kg/m³ + casata"} },
+  { slug:"orion", order:2, status:"activo", name:"Orion", short:"Ortopédico especial",
+    eyebrow:"Colchón ortopédico especial · 1 pillow", images:["img/orion-caracteristicas.jpg"],
+    chips:["Ortopédico especial","1 pillow de 7 cm","Doble estructura interior","34 cm de altura","Tela jacquard"],
+    firm:{level:4,text:"Ortopédico especial"}, warranty:["Garantía 5 años","en estructura interna"], height:"34 cm · una cara",
+    sizes:SZ(879900,1299900,989900,1449900,1099900,1599900,1289900,1899900,1599900,2349900),
+    specs:[{k:"Tipo de colchón",v:"Ortopédico especial"},{k:"Estructura",v:"Doble estructura interior: núcleo de casata de alta densidad con capas de espuma arriba y abajo"},{k:"Pillow",v:"1 pillow de 7 cm (una cara de uso)"},{k:"Tapizado",v:"Tela jacquard acolchada en capitoné"},{k:"Altura",v:"34 cm"},{k:"Peso recomendado",v:"Hasta 100 kg aprox. por persona"},{k:"Garantía",v:"5 años en estructura interna"}],
+    desc:["El Orion es un colchón ortopédico especial con doble estructura interior: un núcleo de casata de alta densidad acompañado por capas de espuma, que dan un soporte uniforme a toda la espalda.","Encima lleva un pillow de 7 cm que suma suavidad sin perder el apoyo ortopédico. Va tapizado en tela jacquard acolchada en capitoné.","Mide 34 cm de alto y está pensado para personas de hasta 100 kg aprox. Es de una cara: gíralo de cabecera a pies, sin voltearlo."],
+    care:["Gíralo de cabecera a pies cada 3 meses. No lo voltees: el pillow va solo arriba.","Úsalo sobre una base firme y plana, como una base cama."],
+    layers:[{h:26,color:"#f1f1f3",name:"Pillow de 7 cm",text:"Capa superior acolchada en tela jacquard. Suavidad al acostarte."},{h:22,color:"#c8ccd6",name:"Capa de espuma superior",text:"Primera estructura: transición entre el pillow y el núcleo."},{h:80,color:"#e7b8c4",fleck:true,name:"Núcleo de casata de alta densidad",text:"El soporte ortopédico. Firme, parejo y duradero."},{h:22,color:"#c8ccd6",name:"Capa de espuma inferior",text:"Segunda estructura: estabiliza el núcleo desde abajo."}],
+    border:{color:"#b0246e",name:"Costados fucsia acolchados",text:"Tela con franjas que mantiene la forma del borde."},
+    compare:{caras:"Una (1 pillow)",soporte:"Doble estructura con núcleo de casata"} },
+  { slug:"sueno-flex", order:3, status:"activo", name:"Sueño Flex", short:"Fabricación propia",
+    eyebrow:"Colchón ortopédico · Fabricado por Punto del Colchón", images:["img/suenoflex-caracteristicas.jpg"],
+    chips:["Fabricación propia","Ortopédico","1 ó 2 pillows de 7 cm","Lámina central en casata","34 cm de altura"],
+    firm:{level:4,text:"Ortopédico"}, warranty:["Garantía 5 años","fabricación propia"], height:"34 cm · 1 ó 2 pillows",
+    sizes:SZ(699900,1049900,799900,1199900,899900,1349900,1099900,1649900,1399900,2099900),
+    specs:[{k:"Fabricante",v:"Punto del Colchón, Bucaramanga"},{k:"Tipo de colchón",v:"Ortopédico"},{k:"Pillow",v:"1 pillow (una cara) o 2 pillows (dos caras), de 7 cm cada uno"},{k:"Lámina central",v:"Casata (espuma aglomerada)"},{k:"Tapizado",v:"Tela jacquard acolchada"},{k:"Altura",v:"34 cm"},{k:"Garantía",v:"5 años"}],
+    desc:["El Sueño Flex lo fabricamos nosotros en Punto del Colchón. Es un colchón ortopédico con lámina central en casata, que da un soporte firme y parejo.","Puedes pedirlo con 1 pillow (una cara de uso) o con 2 pillows (dos caras), de 7 cm cada uno. Va tapizado en tela jacquard acolchada.","Mide 34 cm de alto y tiene garantía de 5 años."],
+    care:["Con 2 pillows: voltéalo y gíralo cada 3 meses. Con 1 pillow: solo gíralo de cabecera a pies.","Úsalo sobre una base firme y plana."],
+    layers:[{h:26,color:"#f1f1f3",name:"Pillow superior de 7 cm",text:"Tela jacquard acolchada. Confort al acostarte."},{h:96,color:"#e7b8c4",fleck:true,name:"Lámina central en casata",text:"Soporte ortopédico firme que no se hunde."},{h:26,color:"#e6e6ea",name:"Pillow inferior de 7 cm (opcional)",text:"Con 2 pillows el colchón tiene dos caras de uso."}],
+    border:{color:"#9aa0ab",name:"Costados acolchados en rombo",text:"Tela gris con el logo Sueño Flex en naranja."},
+    compare:{caras:"Una o dos (1 ó 2 pillows)",soporte:"Lámina central en casata"} }
+];
+const PRESETS = [
+  { name:"Azul noche", p:{ brand:"#1f2a4d", accent:"#e9935a", sale:"#b8322a", bar:"#0b0b0c" } },
+  { name:"Negro y dorado", p:{ brand:"#111111", accent:"#c9a14a", sale:"#a8322a", bar:"#000000" } },
+  { name:"Fucsia Orion", p:{ brand:"#9c1f63", accent:"#f08a24", sale:"#c0262d", bar:"#1a0b14" } },
+  { name:"Naranja Sueño Flex", p:{ brand:"#d4612b", accent:"#1f2a4d", sale:"#b8322a", bar:"#2b2b2e" } },
+  { name:"Verde descanso", p:{ brand:"#1f5d4a", accent:"#e2b45a", sale:"#b8322a", bar:"#0e1f1a" } }
+];
+const STATUSES = ["nuevo","confirmado","entregado","cancelado"];
+const CARE_COMMON = ["Garantía por defectos de fabricación según la ficha de cada modelo.","Usa protector impermeable. No lo dobles ni lo mojes.","Ventílalo al desempacar: el olor de espuma nueva se va en 2 a 3 días."];
+
+/* ================= state ================= */
+let SETTINGS = clone(DEFAULT_SETTINGS);
+let PRODUCTS = clone(DEFAULT_PRODUCTS);
+let DISCOUNTS = [];
+let ORDERS = [], LEADS = [];
+let dbProductsLoaded = false, apiOk = true;
+let isAdmin = false, authChecked = false;
+async function api(path, opts = {}){
+  const r = await fetch(path, Object.assign({ headers: { "Content-Type": "application/json" }, credentials: "same-origin" }, opts, opts.body ? { method: opts.method || "POST", body: JSON.stringify(opts.body) } : {}));
+  if(r.status === 204) return null;
+  const data = await r.json().catch(() => ({}));
+  if(!r.ok) throw Object.assign(new Error(data.error || "Error"), { status: r.status });
+  return data;
+}
+const admin = (action, body) => api(`/api/admin?action=${action}`, { body: body || {} });
+let key = null, m = null, size = null, view = "photo";
+let cart = load("pdc-cart", []);
+let appliedDisc = null;
+
+function clone(x){ return JSON.parse(JSON.stringify(x)); }
+function load(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } }
+function saveLocal(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} }
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const cop = n => "$" + Math.round(Number(n)||0).toLocaleString("es-CO");
+const active = () => PRODUCTS.filter(p => p.status !== "borrador").sort((a,b) => (a.order||0)-(b.order||0));
+const bySlug = s => PRODUCTS.find(p => p.slug === s);
+const imgOf = p => (p.images && p.images[0]) || "img/logo-blanco.png";
+const waNum = () => String(SETTINGS.whatsapp||"").replace(/\D/g,"");
+const waLink = msg => `https://wa.me/${waNum()}?text=${encodeURIComponent(msg)}`;
+function toast(t){ const el=$("toast"); el.textContent=t; el.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>el.hidden=true,2200); }
+function rid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
+
+/* ================= palette ================= */
+function lum(hex){ const h = hex.replace("#",""); const [r,g,b] = [0,2,4].map(i => parseInt(h.substr(i,2),16)/255).map(c => c<=.03928? c/12.92 : Math.pow((c+.055)/1.055,2.4)); return .2126*r+.7152*g+.0722*b; }
+function applyPalette(p){
+  p = Object.assign({}, DEFAULT_SETTINGS.palette, p||{});
+  const onBrand = lum(p.brand) > .45 ? "#111111" : "#ffffff";
+  const onBar = lum(p.bar) > .45 ? "#111111" : "#ffffff";
+  $("paletteStyle").textContent = `:root{--brand:${p.brand};--on-brand:${onBrand};--accent:${p.accent};--sale:${p.sale};--bar:${p.bar};--on-bar:${onBar}}`;
+  $("topbar").classList.toggle("light-bar", lum(p.bar) > .45);
+}
+
+/* ================= store rendering ================= */
+function renderChrome(){
+  applyPalette(SETTINGS.palette);
+  $("announcement").textContent = SETTINGS.announcement || "";
+  $("strip").hidden = !SETTINGS.announcement;
+  $("waText").textContent = "+" + waNum().replace(/^57(\d{3})(\d{3})(\d{4})$/, "57 $1 $2 $3");
+  $("pillowName").textContent = `Agrega: ${SETTINGS.pillow?.name || "Almohada"}`;
+  $("pillowPrice").textContent = `+ ${cop(SETTINGS.pillow?.price)}`;
+  const list = active();
+  $("nav").innerHTML = list.map(p => `<a href="#${esc(p.slug)}" data-k="${esc(p.slug)}">${esc(p.name)}</a>`).join("") + `<a href="#asesor">Asesor</a><a href="#comparar">Comparar</a>`;
+  $("models").innerHTML = list.map(p => `<a href="#${esc(p.slug)}" data-k="${esc(p.slug)}"><img src="${esc(imgOf(p))}" alt=""><span>${esc(p.name)}<small>${esc(p.short||"")}</small></span></a>`).join("");
+  // advisor size options
+  const sizeNames = [...new Set(list.flatMap(p => (p.sizes||[]).map(s => s.name + " (" + s.dims + ")")))];
+  const cur = $("a-size").value;
+  $("a-size").innerHTML = `<option value="">No sé todavía</option>` + sizeNames.map(s => `<option>${esc(s)}</option>`).join("");
+  $("a-size").value = sizeNames.includes(cur) ? cur : "";
+  renderCompare();
+}
+
+function cutSvg(layers, border, w, h, pad){
+  layers = layers || []; border = border || {color:"#888"};
+  const total = layers.reduce((a,l)=>a+(Number(l.h)||1),0) || 1; const sc = (h - 2*pad)/total; let y = pad, out = "";
+  layers.forEach((l,i) => {
+    const lh = (Number(l.h)||1)*sc; let flecks = "";
+    if(l.fleck){ for(let k=0;k<Math.round(w/14);k++){ const fx = pad + ((k*37)%(w-2*pad)), fy = y + ((k*13)%Math.max(1,lh-4)) + 2; flecks += `<circle cx="${fx}" cy="${fy}" r="${Math.max(1,w/260)}" fill="#3a3a44" opacity=".5"/>`; } }
+    out += `<g class="layer" data-layer="${i}"><rect x="${pad}" y="${y}" width="${w-2*pad}" height="${lh}" fill="${esc(l.color)}"/>${flecks}</g>`;
+    y += lh;
+  });
+  out += `<g class="layer" data-layer="${layers.length}"><rect x="${pad}" y="${pad}" width="${w-2*pad}" height="${h-2*pad}" rx="${w/80}" fill="none" stroke="${esc(border.color)}" stroke-width="${w/52}"/></g>`;
+  return out;
+}
+
+function renderModel(){
+  const list = active();
+  if(!list.length){ return; }
+  if(!key || !bySlug(key) || bySlug(key).status === "borrador") key = list[0].slug;
+  m = bySlug(key);
+  document.querySelectorAll("#models a,#nav a").forEach(a => { if(a.dataset.k===key) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+  $("eyebrow").textContent = m.eyebrow || "";
+  $("chips").innerHTML = (m.chips||[]).map(c => `<span class="chip">${esc(c)}</span>`).join("");
+  const lvl = Number(m.firm?.level)||3;
+  $("firmText").textContent = `Nivel de firmeza: ${m.firm?.text || ""}`;
+  $("firm").setAttribute("aria-label", `Nivel de firmeza ${lvl} de 5`);
+  $("firmScale").innerHTML = [1,2,3,4,5].map(n => `<span class="${n<=lvl?"on":""}"></span>`).join("");
+  $("perkWarranty").textContent = m.warranty?.[0] || ""; $("perkWarrantySub").textContent = m.warranty?.[1] || "";
+  $("layersName").textContent = m.name;
+  $("specs").innerHTML = (m.specs||[]).map(s => `<tr><th scope="row">${esc(s.k)}</th><td>${esc(s.v)}</td></tr>`).join("")
+    + `<tr><th scope="row">Medidas</th><td>${(m.sizes||[]).map(s=>esc(s.name+": "+s.dims)).join("<br>")}</td></tr>`;
+  $("desc").innerHTML = (m.desc||[]).map(p => `<p>${esc(p)}</p>`).join("");
+  $("care").innerHTML = [...(m.care||[]), ...CARE_COMMON].map(c => `<li>${esc(c)}</li>`).join("");
+  const sizes = m.sizes || [];
+  const prev = size && size.id;
+  size = sizes.find(s => s.id === prev && s.stock !== 0) || sizes.find(s => s.id === "doble" && s.stock !== 0) || sizes.find(s => s.stock !== 0) || sizes[0];
+  $("sizes").innerHTML = sizes.map(s => `<div class="size"><input type="radio" name="size" id="sz-${esc(s.id)}" value="${esc(s.id)}" ${size&&s.id===size.id?"checked":""} ${s.stock===0?"disabled":""}><label for="sz-${esc(s.id)}"><b>${esc(s.name)}</b><small>${esc(s.dims)}${s.stock===0?" · agotado":""}</small></label></div>`).join("");
+  // gallery
+  const imgs = (m.images && m.images.length) ? m.images : [imgOf(m)];
+  $("thumbs").innerHTML = imgs.map((src,i) => `<button type="button" data-view="img" data-i="${i}" aria-label="Foto ${i+1}"><img src="${esc(src)}" alt=""></button>`).join("")
+    + `<button type="button" data-view="cut" aria-label="Esquema de capas"><svg viewBox="0 0 72 72"><rect width="72" height="72" fill="var(--surface-2)"/>${cutSvg(m.layers, m.border, 72, 72, 10)}</svg></button>`;
+  $("stageCut").innerHTML = `<rect width="72" height="96" fill="var(--surface-2)"/>` + cutSvg(m.layers, m.border, 72, 96, 8);
+  showView("img", 0);
+  // cutaway section
+  const all = [...(m.layers||[]), m.border].filter(Boolean);
+  $("cutSvg").innerHTML = cutSvg(m.layers, m.border, 520, 240, 20) + `<text x="20" y="282" font-family="Figtree, system-ui, sans-serif" font-size="13" fill="currentColor">${esc(m.height ? "Altura total " + m.height : "")}</text>`;
+  $("cutSvg").style.color = "var(--ink)"; $("cutSvg").classList.remove("focus"); $("cutSvg").dataset.active = "";
+  $("layerList").innerHTML = all.map((l,i) => `<li><button type="button" data-layer="${i}" aria-pressed="false"><i style="background:${esc(l.color)}"></i><div><b>${esc(l.name)}</b><span>${esc(l.text)}</span></div></button></li>`).join("");
+  $("barImg").src = imgOf(m);
+  document.title = `Colchón ${m.name} · ${SETTINGS.storeName || "Punto del Colchón"}`;
+  renderPrice();
+}
+function renderPrice(){
+  if(!m || !size) return;
+  const off = size.was > size.price ? Math.round((1 - size.price/size.was)*100) : 0;
+  $("title").textContent = `Colchón ${m.name} ${size.name}`;
+  $("crumbName").textContent = `Colchón ${m.name} ${size.name}`;
+  $("barName").textContent = `Colchón ${m.name} ${size.name} · ${size.dims}`;
+  $("sizeLabel").textContent = `${size.name} (${size.dims})`;
+  $("sku").textContent = m.slug.slice(0,3).toUpperCase() + "-" + String(size.dims).replace(/\D/g,"");
+  $("priceNow").textContent = cop(size.price);
+  $("priceWas").textContent = off ? cop(size.was) : ""; $("priceOff").textContent = off ? `Ahorras ${cop(size.was-size.price)}` : "";
+  $("offBadge").textContent = off ? `-${off}%` : ""; $("offBadge").hidden = !off;
+  $("barPrice").textContent = off ? `${cop(size.price)}  ·  antes ${cop(size.was)}` : cop(size.price);
+  const lowStock = typeof size.stock === "number" && size.stock > 0 && size.stock <= 3;
+  $("stockNote").textContent = lowStock ? `¡Quedan solo ${size.stock} en esta medida! Precio web en Bucaramanga.` : "Precio web en Bucaramanga. Hasta 6 cuotas con tarjeta de crédito.";
+  $("waBtn").href = waLink(`Hola ${SETTINGS.storeName}, quiero el Colchón ${m.name} ${size.name} (${size.dims}) a ${cop(size.price)}.`);
+}
+function showView(v, i){
+  view = v;
+  document.querySelectorAll("#thumbs button").forEach(b => b.setAttribute("aria-pressed", b.dataset.view===v && (v!=="img" || Number(b.dataset.i)===i)));
+  if(v === "img"){ const imgs = (m.images && m.images.length) ? m.images : [imgOf(m)]; $("mainImg").src = imgs[i] || imgs[0]; $("mainImg").alt = `Colchón ${m.name}`; }
+  $("mainImg").hidden = v !== "img"; $("stageCut").hidden = v !== "cut";
+}
+function renderCompare(){
+  const list = active();
+  const spec = (p,k) => (p.specs||[]).find(s=>s.k===k)?.v || "—";
+  const dbl = p => (p.sizes||[]).find(s=>s.id==="doble") || (p.sizes||[])[0];
+  const rows = [
+    ["Tipo", p => spec(p,"Tipo de colchón")], ["Altura", p => spec(p,"Altura")], ["Firmeza", p => p.firm?.text || "—"],
+    ["Caras", p => p.compare?.caras || "—"], ["Soporte", p => p.compare?.soporte || "—"],
+    ["Garantía", p => (p.warranty?.[0]||"—").replace("Garantía ","")], ["Doble desde", p => dbl(p) ? cop(dbl(p).price) : "—"]];
+  $("cmp").innerHTML = `<thead><tr><th></th>${list.map(p=>`<th scope="col">${esc(p.name)}</th>`).join("")}</tr></thead><tbody>`
+    + rows.map(([lab,f]) => `<tr><th scope="row">${lab}</th>${list.map(p=>`<td>${esc(f(p))}</td>`).join("")}</tr>`).join("")
+    + `<tr><th></th>${list.map(p=>`<td><a href="#${esc(p.slug)}">Ver ${esc(p.name)}</a></td>`).join("")}</tr></tbody>`;
+}
+
+/* store interactions */
+$("sizes").addEventListener("change", e => { size = (m.sizes||[]).find(s => s.id === e.target.value); renderPrice(); });
+$("thumbs").addEventListener("click", e => { const b = e.target.closest("button"); if(b) showView(b.dataset.view, Number(b.dataset.i)||0); });
+function pickLayer(i){
+  const svg = $("cutSvg"), same = svg.dataset.active === String(i);
+  svg.dataset.active = same ? "" : i; svg.classList.toggle("focus", !same);
+  svg.querySelectorAll("g.layer").forEach(g => g.classList.toggle("active", !same && g.dataset.layer == i));
+  document.querySelectorAll("#layerList button").forEach(b => b.setAttribute("aria-pressed", !same && b.dataset.layer == i));
+}
+$("layerList").addEventListener("click", e => { const b = e.target.closest("button"); if(b) pickLayer(b.dataset.layer); });
+$("cutSvg").addEventListener("click", e => { const g = e.target.closest("g.layer"); if(g) pickLayer(g.dataset.layer); });
+$("infoTabs").addEventListener("click", e => {
+  const t = e.target.closest("[role=tab]"); if(!t) return;
+  document.querySelectorAll("#infoTabs [role=tab]").forEach(x => { x.setAttribute("aria-selected", x===t); $(x.getAttribute("aria-controls")).hidden = x!==t; });
+});
+const dist = {5:78,4:16,3:4,2:1,1:1};
+$("bars").innerHTML = [5,4,3,2,1].map(n => `<div><span>${n}★</span><span class="track"><i style="width:${dist[n]}%"></i></span><span>${dist[n]}%</span></div>`).join("");
+const q = $("qty"); const clampQ = v => Math.max(1, Math.min(10, parseInt(v)||1));
+$("minus").onclick = () => q.value = clampQ(+q.value-1);
+$("plus").onclick  = () => q.value = clampQ(+q.value+1);
+q.onchange = () => q.value = clampQ(q.value);
+
+/* ================= cart & checkout ================= */
+function addToCart(){
+  if(!m || !size) return;
+  const n = clampQ(q.value), id = m.slug + "-" + size.id, ex = cart.find(c=>c.key===id);
+  ex ? ex.qty += n : cart.push({ key:id, slug:m.slug, sizeId:size.id, name:`Colchón ${m.name} ${size.name} (${size.dims})`, price:size.price, qty:n });
+  if($("addPillow").checked){ const p = cart.find(c=>c.key==="pillow"); p ? p.qty += 1 : cart.push({ key:"pillow", name:SETTINGS.pillow?.name||"Almohada", price:SETTINGS.pillow?.price||0, qty:1 }); }
+  saveLocal("pdc-cart", cart); drawCart(); toast("Agregado al carrito");
+}
+function totals(){
+  const sub = cart.reduce((a,c)=>a+c.price*c.qty,0);
+  const disc = appliedDisc ? Math.round(sub * (Number(appliedDisc.pct)||0) / 100) : 0;
+  return { sub, disc, total: sub - disc };
+}
+function orderMessage(){
+  const t = totals();
+  return `Hola ${SETTINGS.storeName}, quiero hacer este pedido:\n` + cart.map(c=>`• ${c.qty} × ${c.name} – ${cop(c.price*c.qty)}`).join("\n")
+    + (appliedDisc ? `\nDescuento ${appliedDisc.code} (${appliedDisc.pct}%): -${cop(t.disc)}` : "")
+    + `\nTotal: ${cop(t.total)}`
+    + `\n\nNombre: ${$("c-name").value || "-"}\nCelular: ${$("c-phone").value || "-"}\nDirección: ${$("c-addr").value || "-"}\nMunicipio: ${$("c-city").value}\nPago: ${$("c-pay").value}`;
+}
+function drawCart(){
+  $("cartCount").textContent = cart.reduce((a,c)=>a+c.qty,0);
+  $("lines").innerHTML = cart.length ? cart.map((c,i)=>`<div class="line"><div><b>${esc(c.name)}</b><br>${c.qty} × ${cop(c.price)}</div><button type="button" data-i="${i}">Quitar</button></div>`).join("")
+    : '<p class="note">Tu carrito está vacío. Elige un colchón y un tamaño.</p>';
+  const t = totals();
+  $("subTotal").textContent = cop(t.sub); $("discRow").hidden = !t.disc; $("discAmt").textContent = "-" + cop(t.disc); $("cartTotal").textContent = cop(t.total);
+  $("waCheckout").href = waLink(orderMessage());
+  $("waCheckout").classList.toggle("disabled", !cart.length);
+}
+["c-name","c-phone","c-addr","c-city","c-pay"].forEach(id => $(id).addEventListener("input", () => $("waCheckout").href = waLink(orderMessage())));
+$("lines").addEventListener("click", e => { const b = e.target.closest("button[data-i]"); if(b){ cart.splice(+b.dataset.i,1); saveLocal("pdc-cart", cart); drawCart(); }});
+$("discApply").onclick = async () => {
+  const code = $("discCode").value.trim().toUpperCase();
+  appliedDisc = null;
+  if(code){
+    try { appliedDisc = await api(`/api/store?code=${encodeURIComponent(code)}`); } catch(e){ appliedDisc = null; }
+  }
+  $("discMsg").textContent = !code ? "" : appliedDisc ? `Código aplicado: ${appliedDisc.pct}% de descuento.` : "Ese código no existe o ya no está activo.";
+  drawCart();
+};
+$("waCheckout").addEventListener("click", e => {
+  if(!cart.length){ e.preventDefault(); toast("Agrega un colchón al carrito primero."); return; }
+  saveOrder(); // the link itself opens WhatsApp
+  setTimeout(() => { cart = []; appliedDisc = null; saveLocal("pdc-cart", cart); drawCart(); $("drawer").hidden = true; toast("Pedido listo en WhatsApp. Envíalo para confirmarlo."); }, 300);
+});
+function saveOrder(){
+  // keepalive lets the request finish while WhatsApp opens; the message itself also carries the order
+  const payload = { items: cart.filter(c => c.slug).map(c => ({ slug:c.slug, sizeId:c.sizeId, qty:c.qty })), pillow: (cart.find(c => c.key === "pillow")||{}).qty || 0,
+    code: appliedDisc?.code || "", customer: { name: $("c-name").value, phone: $("c-phone").value, addr: $("c-addr").value, city: $("c-city").value, pay: $("c-pay").value } };
+  fetch("/api/order", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(payload), keepalive: true }).catch(() => {});
+}
+$("addCart").onclick = addToCart; $("barAdd").onclick = addToCart;
+$("openCart").onclick = () => $("drawer").hidden = false;
+$("closeCart").onclick = () => $("drawer").hidden = true;
+$("drawer").addEventListener("click", e => { if(e.target.id==="drawer") $("drawer").hidden = true; });
+document.addEventListener("keydown", e => { if(e.key==="Escape") $("drawer").hidden = true; });
+
+/* ================= advisor ================= */
+const OPTS = {
+  pos: [["boca-arriba","Boca arriba"],["de-lado","De lado"],["boca-abajo","Boca abajo"],["varia","Me muevo mucho"]],
+  pain:[["ninguna","Ninguna"],["espalda","Espalda baja"],["cuello","Cuello u hombros"],["cadera","Caderas"]],
+  firm:[["suave","Suave"],["media","Media"],["firme","Firme"],["nose","No sé"]],
+  who: [["solo","Solo"],["pareja","En pareja"]]
+};
+Object.entries(OPTS).forEach(([k,list]) => {
+  $("a-"+k).innerHTML = list.map(([v,l],i) => `<label><input type="radio" name="a-${k}" value="${v}" ${i===0&&k!=="firm"?"checked":""}${k==="firm"&&v==="nose"?"checked":""}>${l}</label>`).join("");
+});
+function answers(){
+  const r = k => (document.querySelector(`input[name="a-${k}"]:checked`)||{}).value || "";
+  const lab = (k,v) => (OPTS[k].find(o=>o[0]===v)||[])[1] || "";
+  return { name: $("a-name").value.trim().slice(0,60), phone: $("a-phone").value.trim().slice(0,30), weight: parseInt($("a-weight").value)||null,
+    size: $("a-size").value, pos: lab("pos",r("pos")), pain: lab("pain",r("pain")), firm: lab("firm",r("firm")), who: lab("who",r("who")),
+    budget: Number($("a-budget").value)||null, notes: $("a-notes").value.trim().slice(0,400) };
+}
+function sizeFor(p, a){
+  const want = (a.size||"").split(" (")[0];
+  return (p.sizes||[]).find(s => s.name === want && s.stock !== 0) || (p.sizes||[]).find(s => s.id === (a.who==="En pareja"?"doble":"sencillo") && s.stock !== 0) || (p.sizes||[]).find(s => s.stock !== 0) || (p.sizes||[])[0];
+}
+function ruleBased(a){
+  const list = active();
+  const scored = list.map(p => {
+    let s = 0; const lvl = Number(p.firm?.level)||3, pillow = /pillow/i.test((p.chips||[]).join(" ")), ortho = /ortop/i.test(JSON.stringify(p.specs||[]) + (p.firm?.text||""));
+    if(a.weight && a.weight >= 90) s += lvl >= 5 ? 3 : lvl >= 4 ? 1 : -1;
+    if(a.pain === "Espalda baja") s += ortho ? 3 : lvl >= 5 ? 2 : 0;
+    if(a.pain === "Cuello u hombros" || a.pain === "Caderas" || a.pos === "De lado") s += pillow ? 2 : -1;
+    if(a.firm === "Firme") s += lvl >= 5 ? 3 : lvl >= 4 ? 1 : 0;
+    if(a.firm === "Suave" || a.firm === "Media") s += pillow ? 2 : -2;
+    if(a.pos === "Boca abajo") s += lvl >= 5 ? 2 : 0;
+    const sz = sizeFor(p, a); if(a.budget && sz && sz.price > a.budget) s -= 4;
+    return { p, s, sz };
+  }).sort((x,y) => y.s - x.s);
+  const best = scored[0]; if(!best) return null;
+  const reasons = [];
+  if(a.pain === "Espalda baja") reasons.push("Tiene soporte ortopédico firme, que ayuda con el dolor de espalda baja.");
+  if(a.weight && a.weight >= 90) reasons.push("Su estructura aguanta bien el peso sin hundirse.");
+  if(/pillow/i.test((best.p.chips||[]).join(" "))) reasons.push("El pillow de 7 cm da suavidad en hombros y caderas.");
+  if(Number(best.p.firm?.level) >= 5) reasons.push("Es el más firme de la tienda: ideal si te gusta sentir el apoyo.");
+  if(reasons.length < 2) reasons.push(`Firmeza ${best.p.firm?.text?.toLowerCase()} y ${best.p.warranty?.[0]?.toLowerCase()}.`);
+  return { slug: best.p.slug, size: best.sz?.name, reasons: reasons.slice(0,3), tip: "Confirma la medida con un asesor por WhatsApp antes de pagar.", by: "reglas" };
+}
+async function aiSuggest(a){
+  const r = await api("/api/advisor", { body: { answers: a } });
+  if(!r || !bySlug(r.slug) || !Array.isArray(r.reasons)) return null;
+  return r;
+}
+$("advForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const a = answers(), btn = $("advGo");
+  btn.disabled = true; $("advStatus").textContent = "El asesor está pensando…";
+  let rec = null;
+  try { rec = await aiSuggest(a); } catch(err){ /* fall back to the rule set */ }
+  if(!rec) rec = ruleBased(a);
+  btn.disabled = false; $("advStatus").textContent = "";
+  if(!rec){ $("reco").innerHTML = `<p class="note">No hay colchones activos para recomendar.</p>`; return; }
+  const p = bySlug(rec.slug), sz = (p.sizes||[]).find(s => s.name === rec.size) || sizeFor(p, a);
+  const msg = `Hola ${SETTINGS.storeName}, usé el asesor de descanso.\n\nMis datos:\n• Nombre: ${a.name||"-"}\n• Peso: ${a.weight? a.weight+" kg":"-"}\n• Duermo: ${a.pos} · ${a.who}\n• Molestia: ${a.pain}\n• Prefiero: ${a.firm}\n• Medida: ${a.size||"no sé"}\n• Presupuesto: ${a.budget? cop(a.budget):"sin límite"}${a.notes? "\n• Notas: "+a.notes:""}\n\nMe sugirió: Colchón ${p.name} ${sz?sz.name+" ("+sz.dims+") a "+cop(sz.price):""}.\n¿Me ayudan a confirmarlo?`;
+  $("reco").className = "reco ready";
+  $("reco").innerHTML = `<div class="who">${rec.by === "ia" ? "Sugerencia del asesor con IA" : "Sugerencia del asesor"}</div>
+    <img src="${esc(imgOf(p))}" alt="Colchón ${esc(p.name)}">
+    <h3 style="font-size:26px">Colchón ${esc(p.name)}${sz?` <span class="note" style="font-family:var(--body)">${esc(sz.name)} · ${cop(sz.price)}</span>`:""}</h3>
+    <ul>${rec.reasons.map(r=>`<li>${esc(r)}</li>`).join("")}</ul>
+    ${rec.tip?`<p class="note" style="margin:0">${esc(rec.tip)}</p>`:""}
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn wa" href="${esc(waLink(msg))}" target="_blank" rel="noopener">Enviar a un asesor por WhatsApp</a><a class="btn" href="#${esc(p.slug)}">Ver el colchón</a></div>`;
+  saveLead(a, p, sz, rec);
+});
+async function saveLead(a, p, sz, rec){
+  try { await api("/api/lead", { body: { answers: a, suggestion: { slug: p.slug, name: p.name, size: sz?.name || "", price: sz?.price || 0, reasons: rec.reasons, by: rec.by } } }); } catch(e){}
+}
+
+/* ================= dashboard ================= */
+let dpanel = "resumen", editing = null, confirmDel = null, palDraft = null;
+const P = id => $("dpanels");
+function flat(col){ return col.flatMap(d => (d.items||[]).map(x => Object.assign({ owner: d._id }, x))).sort((a,b) => String(b.at).localeCompare(String(a.at))); }
+function statusOf(o){ return o.status || "nuevo"; }
+function fmtDate(s){ try { return new Date(s).toLocaleString("es-CO", { day:"2-digit", month:"short", hour:"2-digit", minute:"2-digit" }); } catch(e){ return s; } }
+function renderDash(){
+  document.querySelectorAll("#side button").forEach(b => b.setAttribute("aria-current", b.dataset.p === dpanel));
+  const nNew = ORDERS.filter(o => statusOf(o) === "nuevo").length;
+  $("newOrders").hidden = !nNew; $("newOrders").textContent = nNew;
+  $("newLeads").hidden = !LEADS.length; $("newLeads").textContent = LEADS.length;
+  const root = $("dpanels");
+  const noDb = !apiOk ? `<div class="confirm">No se pudo conectar con la base de datos. Revisa la conexión y toca “Actualizar datos”.</div>` : "";
+  if(dpanel === "resumen"){
+    const conf = ORDERS.filter(o => ["confirmado","entregado"].includes(statusOf(o)));
+    const sales = conf.reduce((a,o)=>a+(o.total||0),0);
+    const avg = ORDERS.length ? ORDERS.reduce((a,o)=>a+(o.total||0),0)/ORDERS.length : 0;
+    const top = {}; ORDERS.forEach(o => (o.items||[]).forEach(i => { if(i.slug) top[i.slug] = (top[i.slug]||0) + i.qty; }));
+    const topSlug = Object.entries(top).sort((a,b)=>b[1]-a[1])[0];
+    root.innerHTML = `<div class="dpanel">${noDb}
+      <div class="dhead"><h1>Resumen</h1><span class="note">${dbProductsLoaded ? "Datos en vivo" : "Mostrando el catálogo de ejemplo"}</span></div>
+      <div class="kpis">
+        <div class="kpi"><span>Ventas confirmadas</span><b>${cop(sales)}</b></div>
+        <div class="kpi"><span>Pedidos</span><b>${ORDERS.length}</b></div>
+        <div class="kpi"><span>Ticket promedio</span><b>${cop(avg)}</b></div>
+        <div class="kpi"><span>Consultas del asesor</span><b>${LEADS.length}</b></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><h3>Últimos pedidos</h3>${ORDERS.length ? `<div class="tablewrap"><table style="min-width:0"><tbody>${ORDERS.slice(0,5).map(o=>`<tr><td>${esc(o.customer?.name||"Cliente")}<br><small class="note">${fmtDate(o.at)}</small></td><td>${cop(o.total)}</td><td><span class="status ${statusOf(o)}">${statusOf(o)}</span></td></tr>`).join("")}</tbody></table></div>` : `<p class="empty">Aún no hay pedidos. Aparecen aquí cuando un cliente finaliza el carrito por WhatsApp.</p>`}</div>
+        <div class="card"><h3>Catálogo</h3><p>${active().length} productos activos · ${PRODUCTS.length - active().length} en borrador</p>
+          <p>Más pedido: <b>${topSlug ? esc(bySlug(topSlug[0])?.name || topSlug[0]) : "—"}</b></p>
+          <p>Medidas agotadas: <b>${PRODUCTS.reduce((a,p)=>a+(p.sizes||[]).filter(s=>s.stock===0).length,0)}</b></p>
+          <button class="btn small" type="button" data-go="productos">Gestionar productos</button></div>
+      </div></div>`;
+  }
+  if(dpanel === "productos" && !editing){
+    root.innerHTML = `<div class="dpanel">${noDb}
+      <div class="dhead"><h1>Productos</h1><button class="btn primary" type="button" id="newProd">+ Nuevo producto</button></div>
+      <div class="card tablewrap"><table><thead><tr><th></th><th>Producto</th><th>Estado</th><th>Doble</th><th>Inventario</th><th></th></tr></thead><tbody>
+      ${PRODUCTS.slice().sort((a,b)=>(a.order||0)-(b.order||0)).map(p => { const d = (p.sizes||[]).find(s=>s.id==="doble")||(p.sizes||[])[0]; const st = (p.sizes||[]).reduce((a,s)=>a+(Number(s.stock)||0),0);
+        return `<tr><td><img src="${esc(imgOf(p))}" alt=""></td><td><b>${esc(p.name)}</b><br><small class="note">${esc(p.short||"")}</small></td><td><span class="status ${esc(p.status||"activo")}">${esc(p.status||"activo")}</span></td><td>${d?cop(d.price):"—"}</td><td>${st} unid.</td>
+        <td style="white-space:nowrap"><button class="btn small" type="button" data-edit="${esc(p.slug)}">Editar</button> <button class="btn small" type="button" data-dup="${esc(p.slug)}">Duplicar</button> <a class="btn small" href="#${esc(p.slug)}">Ver</a></td></tr>`; }).join("")}
+      </tbody></table></div></div>`;
+  }
+  if(dpanel === "productos" && editing) renderEditor(root, noDb);
+  if(dpanel === "pedidos"){
+    root.innerHTML = `<div class="dpanel">${noDb}<div class="dhead"><h1>Pedidos</h1><span class="note">Cambia el estado a medida que confirmas y entregas.</span></div>
+      <div class="card tablewrap">${ORDERS.length ? `<table><thead><tr><th>Fecha</th><th>Cliente</th><th>Productos</th><th>Total</th><th>Estado</th></tr></thead><tbody>
+      ${ORDERS.map(o => `<tr><td>${fmtDate(o.at)}</td><td><b>${esc(o.customer?.name||"Cliente")}</b><br><small class="note">${esc(o.customer?.phone||"")} · ${esc(o.customer?.city||"")}<br>${esc(o.customer?.addr||"")} · ${esc(o.customer?.pay||"")}</small>${o.customer?.phone?`<br><a href="${esc("https://wa.me/57"+String(o.customer.phone).replace(/\D/g,"").replace(/^57/,""))}" target="_blank" rel="noopener">Escribirle</a>`:""}</td>
+        <td>${(o.items||[]).map(i=>`${i.qty} × ${esc(i.name)}`).join("<br>")}${o.discount?`<br><small class="note">Código ${esc(o.discount.code)} (${o.discount.pct}%)</small>`:""}</td><td>${cop(o.total)}</td>
+        <td><select data-status="${esc(o.id)}" aria-label="Estado del pedido">${STATUSES.map(s=>`<option ${s===statusOf(o)?"selected":""}>${s}</option>`).join("")}</select></td></tr>`).join("")}
+      </tbody></table>` : `<p class="empty">Aún no hay pedidos. Cuando un cliente finaliza el carrito, el pedido se guarda aquí y se abre WhatsApp con el detalle.</p>`}</div></div>`;
+  }
+  if(dpanel === "clientes"){
+    root.innerHTML = `<div class="dpanel">${noDb}<div class="dhead"><h1>Asesor y clientes</h1><span class="note">Respuestas del formulario del asesor y la sugerencia que recibió cada cliente.</span></div>
+      <div class="card tablewrap">${LEADS.length ? `<table><thead><tr><th>Fecha</th><th>Cliente</th><th>Respuestas</th><th>Sugerencia</th></tr></thead><tbody>
+      ${LEADS.map(l => { const a = l.answers||{}, s = l.suggestion||{}; return `<tr><td>${fmtDate(l.at)}</td><td><b>${esc(a.name||"Sin nombre")}</b><br><small class="note">${esc(a.phone||"")}</small>${a.phone?`<br><a href="${esc("https://wa.me/57"+String(a.phone).replace(/\D/g,"").replace(/^57/,""))}" target="_blank" rel="noopener">Escribirle</a>`:""}</td>
+        <td><small>${esc([a.weight?a.weight+" kg":"", a.pos, a.who, a.pain, "prefiere "+(a.firm||""), a.size, a.budget?"hasta "+cop(a.budget):""].filter(Boolean).join(" · "))}${a.notes?"<br>“"+esc(a.notes)+"”":""}</small></td>
+        <td><b>${esc(s.name||"")}</b> ${esc(s.size||"")}<br><small class="note">${s.by==="ia"?"Con IA":"Por reglas"}</small></td></tr>`; }).join("")}
+      </tbody></table>` : `<p class="empty">Aún nadie ha usado el asesor. Las consultas aparecen aquí con los datos del cliente.</p>`}</div></div>`;
+  }
+  if(dpanel === "descuentos"){
+    root.innerHTML = `<div class="dpanel">${noDb}<div class="dhead"><h1>Descuentos</h1></div>
+      <form class="card grid3" id="discForm"><div class="field"><label for="d-code">Código</label><input id="d-code" placeholder="BIENVENIDO" required></div>
+        <div class="field"><label for="d-pct">% de descuento</label><input id="d-pct" inputmode="numeric" placeholder="10" required></div>
+        <div class="field"><span class="lab">&nbsp;</span><button class="btn primary" type="submit">Crear código</button></div></form>
+      <div class="card tablewrap">${DISCOUNTS.length ? `<table><thead><tr><th>Código</th><th>Descuento</th><th>Estado</th><th></th></tr></thead><tbody>
+        ${DISCOUNTS.map(d=>`<tr><td><b>${esc(d.code)}</b></td><td>${d.pct}%</td><td><span class="status ${d.active!==false?"activo":"cancelado"}">${d.active!==false?"activo":"pausado"}</span></td>
+        <td style="white-space:nowrap"><button class="btn small" type="button" data-dtoggle="${esc(d.code)}">${d.active!==false?"Pausar":"Activar"}</button> <button class="btn small danger" type="button" data-ddel="${esc(d.code)}">Eliminar</button></td></tr>`).join("")}</tbody></table>`
+        : `<p class="empty">No hay códigos. Crea uno y compártelo con tus clientes; lo escriben en el carrito.</p>`}</div></div>`;
+  }
+  if(dpanel === "apariencia"){
+    const p = palDraft || Object.assign({}, DEFAULT_SETTINGS.palette, SETTINGS.palette);
+    root.innerHTML = `<div class="dpanel">${noDb}<div class="dhead"><h1>Apariencia</h1><div style="display:flex;gap:8px"><button class="btn" type="button" id="palReset">Descartar</button><button class="btn primary" type="button" id="palSave">Guardar paleta</button></div></div>
+      <div class="card"><h3>Paletas listas</h3><div class="swatches">${PRESETS.map((x,i)=>`<button type="button" data-preset="${i}"><span>${["bar","brand","accent","sale"].map(k=>`<i style="background:${x.p[k]}"></i>`).join("")}</span>${esc(x.name)}</button>`).join("")}</div></div>
+      <div class="grid2">
+        <div class="card" style="display:flex;flex-direction:column;gap:14px"><h3>Colores</h3>
+          ${[["bar","Barra superior y pie"],["brand","Botones y selección"],["accent","Acento"],["sale","Ofertas y descuentos"]].map(([k,l])=>`<div class="colorrow"><input type="color" id="pc-${k}" data-pk="${k}" value="${esc(p[k])}"><label for="pc-${k}"><b>${l}</b><br><small class="note">${esc(p[k])}</small></label></div>`).join("")}
+        </div>
+        <div class="card"><h3>Vista previa</h3><div class="preview"><div class="pbar" style="background:${esc(p.bar)}"><img src="img/logo-blanco.png" alt="" style="${lum(p.bar)>.45?"filter:invert(1)":""}"><span style="color:${lum(p.bar)>.45?"#111":"#fff"};font-size:13px">Támesis · Orion · Sueño Flex</span></div>
+          <div class="pbody"><span style="background:${esc(p.brand)};color:${lum(p.brand)>.45?"#111":"#fff"};padding:10px 16px;border-radius:8px;font-weight:600">Agregar al carrito</span><span style="background:${esc(p.sale)};color:#fff;padding:4px 10px;border-radius:6px;font-weight:700;font-size:13px">-35%</span><span style="border:2px solid ${esc(p.accent)};padding:6px 12px;border-radius:999px;font-size:13px">Acento</span></div></div>
+          <p class="note">La tienda cambia en vivo mientras eliges. Guarda para que la vean tus clientes.</p></div>
+      </div>
+      <div class="card"><h3>Barra de anuncios</h3><div class="row2"><input id="annText" class="field" style="border:1.5px solid var(--line);background:var(--bg);border-radius:8px;padding:10px 12px" value="${esc(SETTINGS.announcement||"")}" aria-label="Texto de la barra de anuncios"><button class="btn primary" type="button" id="annSave">Guardar</button></div><p class="note">Déjala vacía para ocultarla.</p></div></div>`;
+  }
+  if(dpanel === "ajustes"){
+    root.innerHTML = `<div class="dpanel">${noDb}<div class="dhead"><h1>Ajustes</h1></div>
+      <form class="card grid2" id="setForm">
+        <div class="field"><label for="s-name">Nombre de la tienda</label><input id="s-name" value="${esc(SETTINGS.storeName)}"></div>
+        <div class="field"><label for="s-wa">WhatsApp de la tienda (con 57)</label><input id="s-wa" inputmode="tel" value="${esc(SETTINGS.whatsapp)}"></div>
+        <div class="field"><label for="s-pn">Producto adicional del carrito</label><input id="s-pn" value="${esc(SETTINGS.pillow?.name||"")}"></div>
+        <div class="field"><label for="s-pp">Precio del adicional</label><input id="s-pp" inputmode="numeric" value="${esc(SETTINGS.pillow?.price||0)}"></div>
+        <div class="full" style="grid-column:1/-1"><button class="btn primary" type="submit">Guardar ajustes</button></div>
+      </form>
+      <div class="card"><h3>Sobre la tienda</h3><p>Todo lo que guardas aquí se ve de inmediato en la tienda pública. Los pedidos y las consultas del asesor se guardan en la base de datos y aparecen en este panel. La contraseña del panel se cambia en Vercel, en la variable ADMIN_PASSWORD.</p></div></div>`;
+  }
+}
+function renderEditor(root, noDb){
+  const p = editing;
+  const lines = (arr, f) => (arr||[]).map(f).join("\n");
+  root.innerHTML = `<div class="dpanel">${noDb}
+    <div class="dhead"><h1>${p._new ? "Nuevo producto" : "Editar " + esc(p.name)}</h1><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" type="button" id="edCancel">Cancelar</button><button class="btn primary" type="button" id="edSave">Guardar producto</button></div></div>
+    <div class="grid2">
+      <div class="card" style="display:flex;flex-direction:column;gap:12px"><h3>Información</h3>
+        <div class="field"><label for="e-name">Nombre</label><input id="e-name" value="${esc(p.name)}"></div>
+        ${p._new ? `<div class="field"><label for="e-slug">Dirección web (sin espacios)</label><input id="e-slug" value="${esc(p.slug)}" placeholder="ej. colchon-nuevo"></div>` : ""}
+        <div class="field"><label for="e-short">Subtítulo corto</label><input id="e-short" value="${esc(p.short)}"></div>
+        <div class="field"><label for="e-eyebrow">Línea superior</label><input id="e-eyebrow" value="${esc(p.eyebrow)}"></div>
+        <div class="grid2"><div class="field"><label for="e-status">Estado</label><select id="e-status"><option value="activo" ${p.status!=="borrador"?"selected":""}>Activo (visible)</option><option value="borrador" ${p.status==="borrador"?"selected":""}>Borrador (oculto)</option></select></div>
+          <div class="field"><label for="e-order">Orden</label><input id="e-order" inputmode="numeric" value="${esc(p.order||1)}"></div></div>
+        <div class="field"><label for="e-chips">Etiquetas (separadas por coma)</label><input id="e-chips" value="${esc((p.chips||[]).join(", "))}"></div>
+        <div class="grid2"><div class="field"><label for="e-firml">Firmeza (1 a 5)</label><input id="e-firml" inputmode="numeric" value="${esc(p.firm?.level||3)}"></div><div class="field"><label for="e-firmt">Texto de firmeza</label><input id="e-firmt" value="${esc(p.firm?.text||"")}"></div></div>
+        <div class="grid2"><div class="field"><label for="e-w1">Garantía</label><input id="e-w1" value="${esc(p.warranty?.[0]||"")}"></div><div class="field"><label for="e-w2">Detalle garantía</label><input id="e-w2" value="${esc(p.warranty?.[1]||"")}"></div></div>
+        <div class="grid2"><div class="field"><label for="e-cc">Caras (comparador)</label><input id="e-cc" value="${esc(p.compare?.caras||"")}"></div><div class="field"><label for="e-cs">Soporte (comparador)</label><input id="e-cs" value="${esc(p.compare?.soporte||"")}"></div></div>
+      </div>
+      <div class="card" style="display:flex;flex-direction:column;gap:12px"><h3>Imágenes</h3>
+        <div class="imgs" id="edImgs">${(p.images||[]).map((src,i)=>`<figure><img src="${esc(src)}" alt=""><button type="button" data-rmimg="${i}" aria-label="Quitar imagen">×</button><small>${i===0?"Principal":"Foto "+(i+1)}</small></figure>`).join("") || `<p class="note">Sin imágenes todavía.</p>`}</div>
+        <div class="field"><label for="e-upload">Subir imagen (JPG, PNG o WebP)</label><input type="file" id="e-upload" accept="image/jpeg,image/png,image/webp"></div><span class="note" id="upMsg"></span>
+        <div class="field"><label for="e-imgurl">O agrega la ruta de una imagen ya publicada</label><div class="row2"><input id="e-imgurl" placeholder="img/mi-colchon.jpg"><button class="btn small" type="button" id="addImgUrl">Agregar</button></div></div>
+        <h3 style="margin-top:8px">Precios e inventario</h3>
+        <div class="sizeedit"><span class="h">Medida</span><span class="h">Dimensiones</span><span class="h">Precio</span><span class="h">Antes</span><span class="h">Stock</span><span></span></div>
+        <div id="edSizes" style="display:flex;flex-direction:column;gap:6px">${(p.sizes||[]).map((s,i)=>sizeRow(s,i)).join("")}</div>
+        <button class="btn small" type="button" id="addSize">+ Agregar medida</button>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><label for="bulkPct" class="note">Ajustar todos los precios</label><input id="bulkPct" inputmode="numeric" placeholder="% ej. 5 o -10" style="width:130px;border:1.5px solid var(--line);background:var(--bg);border-radius:6px;padding:7px 8px"><button class="btn small" type="button" id="bulkApply">Aplicar</button></div>
+      </div>
+    </div>
+    <div class="card grid2">
+      <div class="field"><label for="e-specs">Ficha técnica (una por línea: Característica: valor)</label><textarea id="e-specs" rows="9">${esc(lines(p.specs, s=>s.k+": "+s.v))}</textarea></div>
+      <div class="field"><label for="e-desc">Descripción (un párrafo por línea)</label><textarea id="e-desc" rows="9">${esc((p.desc||[]).join("\n"))}</textarea></div>
+      <div class="field"><label for="e-care">Cuidados (uno por línea)</label><textarea id="e-care" rows="4">${esc((p.care||[]).join("\n"))}</textarea></div>
+      <div class="field"><label for="e-height">Texto de altura (corte por capas)</label><input id="e-height" value="${esc(p.height||"")}"></div>
+      <div class="field"><label for="e-layers">Capas, de arriba hacia abajo (Nombre | color | grosor | descripción)</label><textarea id="e-layers" rows="5">${esc(lines(p.layers, l=>[l.name,l.color,l.h,l.text].join(" | ")))}</textarea></div>
+      <div class="field"><label for="e-border">Costados (Nombre | color | descripción)</label><input id="e-border" value="${esc([p.border?.name,p.border?.color,p.border?.text].filter(x=>x!=null).join(" | "))}"></div>
+    </div>
+    ${p._new ? "" : `<div class="card" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><b>Zona de cuidado</b>${confirmDel===p.slug ? `<span class="confirm">¿Eliminar ${esc(p.name)} de la tienda? No se puede deshacer. <button class="btn small danger" type="button" id="delYes">Sí, eliminar</button><button class="btn small" type="button" id="delNo">No</button></span>` : `<button class="btn small danger" type="button" id="delAsk">Eliminar producto</button><span class="note">Si solo quieres ocultarlo, cambia el estado a Borrador.</span>`}</div>`}
+  </div>`;
+}
+function sizeRow(s,i){ return `<div class="sizeedit" data-row="${i}"><input aria-label="Medida" data-f="name" value="${esc(s.name)}"><input aria-label="Dimensiones" data-f="dims" value="${esc(s.dims)}"><input aria-label="Precio" data-f="price" inputmode="numeric" value="${esc(s.price)}"><input aria-label="Precio antes" data-f="was" inputmode="numeric" value="${esc(s.was)}"><input aria-label="Stock" data-f="stock" inputmode="numeric" value="${esc(s.stock ?? "")}"><button class="btn small danger" type="button" data-rmsize="${i}" aria-label="Quitar medida">×</button></div>`; }
+function readEditor(){
+  const p = editing, v = id => ($(id)?.value ?? "").trim();
+  p.name = v("e-name") || p.name; if(p._new) p.slug = (v("e-slug") || p.name).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
+  p.short = v("e-short"); p.eyebrow = v("e-eyebrow"); p.status = v("e-status"); p.order = Number(v("e-order"))||1;
+  p.chips = v("e-chips").split(",").map(s=>s.trim()).filter(Boolean);
+  p.firm = { level: Math.max(1,Math.min(5,Number(v("e-firml"))||3)), text: v("e-firmt") };
+  p.warranty = [v("e-w1"), v("e-w2")]; p.compare = { caras: v("e-cc"), soporte: v("e-cs") };
+  p.specs = v("e-specs").split("\n").map(l => { const i = l.indexOf(":"); return i>0 ? { k:l.slice(0,i).trim(), v:l.slice(i+1).trim() } : null; }).filter(Boolean);
+  p.desc = v("e-desc").split("\n").map(s=>s.trim()).filter(Boolean);
+  p.care = v("e-care").split("\n").map(s=>s.trim()).filter(Boolean);
+  p.height = v("e-height");
+  p.layers = v("e-layers").split("\n").map(l => { const [name,color,h,text] = l.split("|").map(s=>(s||"").trim()); return name ? { name, color: /^#[0-9a-f]{3,8}$/i.test(color)?color:"#cccccc", h: Number(h)||30, text: text||"", fleck: /casata|aglomer/i.test(name) } : null; }).filter(Boolean);
+  const [bn,bc,bt] = v("e-border").split("|").map(s=>(s||"").trim()); p.border = { name: bn||"Costados", color: /^#[0-9a-f]{3,8}$/i.test(bc)?bc:"#888888", text: bt||"" };
+  p.sizes = [...document.querySelectorAll("#edSizes .sizeedit")].map(r => { const g = f => r.querySelector(`[data-f="${f}"]`).value.trim(); const name = g("name");
+    return { id: name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9]+/g,"-") || rid(), name, dims: g("dims"), price: Number(g("price").replace(/\D/g,""))||0, was: Number(g("was").replace(/\D/g,""))||0, stock: g("stock")==="" ? null : Number(g("stock").replace(/\D/g,"")) }; }).filter(s=>s.name);
+}
+async function saveProduct(){
+  readEditor();
+  const p = editing;
+  if(!p.slug){ toast("Escribe un nombre para el producto."); return; }
+  if(["dashboard","asesor","comparar","reviews","settings","sidebar","customize","upgrade","downloads"].includes(p.slug)){ toast("Esa dirección web está reservada. Usa otra."); return; }
+  if(p._new && bySlug(p.slug)){ toast("Ya existe un producto con esa dirección web."); return; }
+  const body = clone(p); delete body._new;
+  $("edSave").disabled = true;
+  try { await admin("saveProduct", { product: body, isNew: !!p._new }); editing = null; toast("Producto guardado"); await loadAdmin(); }
+  catch(e){ toast(e.status === 401 ? "Tu sesión terminó. Vuelve a entrar." : e.message || "No se pudo guardar."); $("edSave") && ($("edSave").disabled = false); }
+}
+$("dpanels").addEventListener("click", async e => {
+  const t = e.target.closest("button"); if(!t) return;
+  if(t.dataset.go){ dpanel = t.dataset.go; renderDash(); return; }
+  if(t.id === "newProd"){ editing = { _new:true, slug:"", name:"", short:"", eyebrow:"", status:"borrador", order:PRODUCTS.length+1, images:[], chips:[], firm:{level:3,text:""}, warranty:["Garantía 5 años",""], sizes:clone(DEFAULT_PRODUCTS[0].sizes).map(s=>Object.assign(s,{price:0,was:0})), specs:[], desc:[], care:[], layers:[], border:{name:"Costados",color:"#888888",text:""}, compare:{} }; renderDash(); return; }
+  if(t.dataset.edit){ editing = clone(bySlug(t.dataset.edit)); confirmDel = null; renderDash(); return; }
+  if(t.dataset.dup){ const c = clone(bySlug(t.dataset.dup)); c._new = true; c.slug = c.slug + "-copia"; c.name = c.name + " (copia)"; c.status = "borrador"; editing = c; renderDash(); return; }
+  if(t.id === "edCancel"){ editing = null; confirmDel = null; renderDash(); return; }
+  if(t.id === "edSave"){ saveProduct(); return; }
+  if(t.id === "addSize"){ readEditor(); editing.sizes.push({ id: rid(), name:"Nueva", dims:"", price:0, was:0, stock:null }); renderDash(); return; }
+  if(t.dataset.rmsize){ readEditor(); editing.sizes.splice(Number(t.dataset.rmsize),1); renderDash(); return; }
+  if(t.dataset.rmimg){ readEditor(); editing.images.splice(Number(t.dataset.rmimg),1); renderDash(); return; }
+  if(t.id === "addImgUrl"){ const u = $("e-imgurl").value.trim(); if(u){ readEditor(); editing.images.push(u); renderDash(); } return; }
+  if(t.id === "bulkApply"){ const pct = Number($("bulkPct").value.replace(/[^\d-.]/g,"")); if(pct){ readEditor(); editing.sizes.forEach(s => { s.price = Math.round(s.price*(1+pct/100)/100)*100; }); renderDash(); toast(`Precios ajustados ${pct}%. Recuerda guardar.`); } return; }
+  if(t.id === "delAsk"){ readEditor(); confirmDel = editing.slug; renderDash(); return; }
+  if(t.id === "delNo"){ readEditor(); confirmDel = null; renderDash(); return; }
+  if(t.id === "delYes"){ try { await admin("deleteProduct", { slug: editing.slug }); toast("Producto eliminado"); editing = null; confirmDel = null; await loadAdmin(); } catch(err){ toast("No se pudo eliminar."); } return; }
+  if(t.dataset.preset){ palDraft = Object.assign({}, PRESETS[Number(t.dataset.preset)].p); applyPalette(palDraft); renderDash(); return; }
+  if(t.id === "palReset"){ palDraft = null; applyPalette(SETTINGS.palette); renderDash(); return; }
+  if(t.id === "palSave"){ const p = palDraft || SETTINGS.palette; await saveSettings({ palette: p }); palDraft = null; return; }
+  if(t.id === "annSave"){ await saveSettings({ announcement: $("annText").value.trim() }); return; }
+  if(t.dataset.dtoggle){ const d = DISCOUNTS.find(x=>x.code===t.dataset.dtoggle); try { await admin("saveDiscount", { code: d.code, pct: d.pct, active: d.active === false }); await loadAdmin(); } catch(err){ toast("No se pudo cambiar."); } return; }
+  if(t.dataset.ddel){ if(t.dataset.sure){ try { await admin("deleteDiscount", { code: t.dataset.ddel }); toast("Código eliminado"); await loadAdmin(); } catch(err){ toast("No se pudo eliminar."); } } else { t.dataset.sure = "1"; t.textContent = "¿Seguro?"; } return; }
+});
+$("dpanels").addEventListener("input", e => {
+  if(e.target.dataset.pk){ palDraft = Object.assign({}, DEFAULT_SETTINGS.palette, SETTINGS.palette, palDraft||{}, { [e.target.dataset.pk]: e.target.value }); applyPalette(palDraft); e.target.nextElementSibling.querySelector("small").textContent = e.target.value; }
+});
+$("dpanels").addEventListener("change", async e => {
+  if(e.target.dataset.status){ const o = ORDERS.find(x => x.id === e.target.dataset.status); try { await admin("orderStatus", { id: e.target.dataset.status, status: e.target.value }); if(o) o.status = e.target.value; toast("Estado actualizado"); } catch(err){ toast("No se pudo guardar el estado."); } renderDash(); }
+  if(e.target.id === "e-upload" && e.target.files[0]){
+    const f = e.target.files[0]; $("upMsg").textContent = "Subiendo…";
+    try { const dataUrl = await shrink(f); const r = await admin("uploadImage", { dataUrl }); readEditor(); editing.images.push(r.url); renderDash(); toast("Imagen subida. Recuerda guardar el producto."); }
+    catch(err){ $("upMsg").textContent = err.message || "No se pudo subir la imagen."; }
+  }
+});
+$("dpanels").addEventListener("submit", async e => {
+  e.preventDefault();
+  if(e.target.id === "discForm"){
+    const code = $("d-code").value.trim().toUpperCase().replace(/[^A-Z0-9-]/g,""), pct = Math.max(1, Math.min(90, Number($("d-pct").value)||0));
+    if(!code || !pct){ toast("Escribe un código y un porcentaje."); return; }
+    try { await admin("saveDiscount", { code, pct, active:true }); toast("Código creado"); await loadAdmin(); } catch(err){ toast("No se pudo crear el código."); }
+  }
+  if(e.target.id === "setForm"){
+    await saveSettings({ storeName: $("s-name").value.trim() || "Punto del Colchón", whatsapp: $("s-wa").value.replace(/\D/g,""), pillow: { name: $("s-pn").value.trim(), price: Number($("s-pp").value.replace(/\D/g,""))||0 } });
+  }
+});
+async function saveSettings(patch){
+  try { const r = await admin("saveSettings", { settings: patch }); SETTINGS = Object.assign(clone(DEFAULT_SETTINGS), r.settings); applyPalette(SETTINGS.palette); renderChrome(); renderPrice(); drawCart(); toast("Guardado"); renderDash(); }
+  catch(e){ toast(e.status === 401 ? "Tu sesión terminó. Vuelve a entrar." : "No se pudo guardar."); }
+}
+// Reduce a picked photo to at most 1600 px (JPEG) before uploading
+function shrink(file){
+  return new Promise((resolve, reject) => {
+    if(!/^image\/(jpeg|png|webp)$/.test(file.type)) return reject(new Error("Usa una imagen JPG, PNG o WebP."));
+    const img = new Image(), url = URL.createObjectURL(file);
+    img.onload = () => {
+      const k = Math.min(1, 1600 / Math.max(img.width, img.height));
+      const c = document.createElement("canvas"); c.width = Math.round(img.width*k); c.height = Math.round(img.height*k);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+      resolve(c.toDataURL("image/jpeg", 0.85));
+    };
+    img.onerror = () => reject(new Error("No se pudo leer la imagen."));
+    img.src = url;
+  });
+}
+async function loadAdmin(){
+  try {
+    const d = await api("/api/admin?action=data");
+    PRODUCTS = d.products.length ? d.products : PRODUCTS; dbProductsLoaded = !!d.products.length;
+    if(d.settings) SETTINGS = Object.assign(clone(DEFAULT_SETTINGS), d.settings);
+    DISCOUNTS = d.discounts; ORDERS = d.orders; LEADS = d.leads; apiOk = true;
+  } catch(e){
+    if(e.status === 401){ isAdmin = false; $("adminLink").hidden = true; renderGate(); return; }
+    apiOk = false;
+  }
+  if(!palDraft) applyPalette(SETTINGS.palette);
+  renderChrome(); m = null; renderModel(); drawCart();
+  if(!$("dashView").hidden && isAdmin) renderDash();
+}
+$("side").addEventListener("click", e => { const b = e.target.closest("button[data-p]"); if(!b) return; dpanel = b.dataset.p; editing = null; confirmDel = null; if(dpanel !== "apariencia" && palDraft){ palDraft = null; applyPalette(SETTINGS.palette); } renderDash(); });
+
+/* ================= routing ================= */
+function route(){
+  const h = decodeURIComponent(location.hash.slice(1));
+  const dash = h === "dashboard";
+  $("storeView").hidden = dash; $("dashView").hidden = !dash; $("stickyBar").hidden = dash;
+  document.body.classList.toggle("store", !dash);
+  if(dash){ renderGate(); return; }
+  if(palDraft){ palDraft = null; applyPalette(SETTINGS.palette); }
+  if(bySlug(h) && bySlug(h).status !== "borrador" && h !== key){ key = h; renderModel(); window.scrollTo({ top:0 }); }
+  else if(!m) renderModel();
+}
+function renderGate(){
+  if(isAdmin){ $("dashGate").hidden = true; $("dash").hidden = false; renderDash(); }
+  else { $("dashGate").hidden = false; $("dash").hidden = true; $("loginForm").hidden = !authChecked; $("gateMsg").textContent = authChecked ? "Esta sección es solo para el dueño de la tienda." : "Comprobando tu acceso…"; }
+}
+$("loginForm").addEventListener("submit", async e => {
+  e.preventDefault(); $("loginMsg").textContent = "";
+  try { await admin("login", { password: $("l-pass").value }); $("l-pass").value = ""; isAdmin = true; $("adminLink").hidden = false; await loadAdmin(); renderGate(); }
+  catch(err){ $("loginMsg").textContent = err.status === 401 ? "Contraseña incorrecta." : "No se pudo entrar. Intenta de nuevo."; }
+});
+$("logoutBtn").onclick = async () => { try { await admin("logout"); } catch(e){} isAdmin = false; $("adminLink").hidden = true; location.hash = ""; };
+$("refreshBtn").onclick = async () => { await loadAdmin(); toast("Datos actualizados"); };
+window.addEventListener("hashchange", route);
+
+/* ================= boot ================= */
+renderChrome(); route(); drawCart();
+if(!m) renderModel();
+
+(async () => {
+  // public catalog
+  try {
+    const d = await api("/api/store");
+    if(d && d.products && d.products.length){ PRODUCTS = d.products; dbProductsLoaded = true; }
+    if(d && d.settings) SETTINGS = Object.assign(clone(DEFAULT_SETTINGS), d.settings);
+  } catch(e){ apiOk = false; }
+  applyPalette(SETTINGS.palette); renderChrome(); m = null; renderModel(); drawCart();
+  // owner session
+  try { const me = await api("/api/admin?action=me"); isAdmin = !!(me && me.admin); } catch(e){ isAdmin = false; }
+  authChecked = true;
+  $("adminLink").hidden = !isAdmin;
+  if(isAdmin) await loadAdmin();
+  if(!$("dashView").hidden) renderGate();
+})();
+</script>
+</body>
+</html>

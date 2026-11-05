@@ -1,0 +1,18 @@
+{
+  "name": "puntodelcolchon",
+  "private": true,
+  "type": "module",
+  "description": "Tienda en línea de Punto del Colchón (Bucaramanga) con panel del dueño, asesor de descanso y pedidos por WhatsApp.",
+  "scripts": {
+    "setup-db": "node scripts/setup-db.mjs",
+    "dev": "vercel dev"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.5.0",
+    "@neondatabase/serverless": "^1.2.0",
+    "zod": "^4.6.7"
+  }
+}

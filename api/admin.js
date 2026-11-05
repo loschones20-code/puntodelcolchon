@@ -22,17 +22,19 @@ export default async function handler(req, res) {
     if (!isAdmin(req)) return send(res, 401, { error: "Inicia sesión como dueño" });
 
     if (action === "data" && req.method === "GET") {
-      const [products, settings, discounts, orders, leads] = await Promise.all([
+      const [products, settings, discounts, orders, leads, reviews] = await Promise.all([
         getProducts(), getSettings(),
         sql`select data from discounts order by code`,
         sql`select data, status from orders order by created_at desc limit 500`,
         sql`select data from leads order by created_at desc limit 500`,
+        sql`select data, published from reviews order by created_at desc limit 500`,
       ]);
       return send(res, 200, {
         products, settings,
         discounts: discounts.map(r => r.data),
         orders: orders.map(r => ({ ...r.data, status: r.status })),
         leads: leads.map(r => r.data),
+        reviews: reviews.map(r => ({ ...r.data, published: r.published })),
       });
     }
 
@@ -92,6 +94,23 @@ export default async function handler(req, res) {
     if (action === "orderStatus") {
       if (!STATUSES.includes(b.status)) return send(res, 400, { error: "Estado no válido" });
       await sql`update orders set status = ${b.status} where id = ${str(b.id, 40)}`;
+      return send(res, 200, { ok: true });
+    }
+    if (action === "saveReview") {
+      const r = b.review || {};
+      const stars = Math.max(1, Math.min(5, Math.round(num(r.stars))));
+      const name = str(r.name, 60), text = str(r.text, 1200);
+      if (!name || !text) return send(res, 400, { error: "Escribe el nombre y el comentario" });
+      const date = /^d{4}-d{2}-d{2}$/.test(String(r.date || "")) ? r.date : new Date().toISOString().slice(0, 10);
+      const id = /^[a-z0-9]{6,40}$/.test(String(r.id || "")) ? r.id : rid();
+      const review = { id, name, city: str(r.city, 60), product: str(r.product, 60), stars, title: str(r.title, 100), text, date, source: str(r.source, 30) };
+      const published = r.published !== false;
+      await sql`insert into reviews (id, data, published, created_at) values (${id}, ${JSON.stringify(review)}, ${published}, now())
+                on conflict (id) do update set data = excluded.data, published = excluded.published`;
+      return send(res, 200, { ok: true, id });
+    }
+    if (action === "deleteReview") {
+      await sql`delete from reviews where id = ${str(b.id, 40)}`;
       return send(res, 200, { ok: true });
     }
     if (action === "uploadImage") {

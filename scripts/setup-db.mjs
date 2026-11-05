@@ -13,6 +13,7 @@ await sql`create table if not exists discounts (code text primary key, data json
 await sql`create table if not exists orders (id text primary key, data jsonb not null, status text not null default 'nuevo', created_at timestamptz default now())`;
 await sql`create table if not exists leads (id text primary key, data jsonb not null, created_at timestamptz default now())`;
 await sql`create table if not exists images (id text primary key, content_type text not null, data bytea not null, created_at timestamptz default now())`;
+await sql`create table if not exists reviews (id text primary key, data jsonb not null, published boolean not null default true, created_at timestamptz default now())`;
 await sql`create index if not exists orders_created on orders (created_at desc)`;
 await sql`create index if not exists leads_created on leads (created_at desc)`;
 

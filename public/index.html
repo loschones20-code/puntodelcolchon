@@ -531,18 +531,16 @@ section.block,.hero{scroll-margin-top:calc(var(--hh) + 12px)}
     <div class="compare"><table id="cmp"></table></div>
   </section>
 
-    <section class="block" id="reviews" aria-labelledby="h-rev">
-    <h2 id="h-rev">Opiniones de clientes</h2>
-    <p class="sample">Reseñas de ejemplo para el diseño. Cámbialas por opiniones reales antes de publicar.</p>
-    <div class="reviews">
-      <div><div class="score">4.8</div><div class="stars" aria-hidden="true">★★★★★</div><div class="bars" id="bars"></div></div>
-      <div>
-        <div class="review"><span class="stars">★★★★★</span> <b>Firme como lo quería</b><p>Se me quitó el dolor de espalda en la primera semana. Llegó al día siguiente.</p><small>Cliente de ejemplo · Floridablanca</small></div>
-        <div class="review"><span class="stars">★★★★★</span> <b>Muy buena relación precio-calidad</b><p>La tela es fresca y los bordes no se hunden.</p><small>Cliente de ejemplo · Bucaramanga</small></div>
-        <div class="review"><span class="stars">★★★★☆</span> <b>Bueno, algo firme al inicio</b><p>Los primeros días lo sentí duro, después se acomodó.</p><small>Cliente de ejemplo · Girón</small></div>
+    <section class="block" id="reviews" aria-labelledby="h-rev" hidden>
+      <div class="sec-head" data-reveal>
+        <p class="kicker">Opiniones</p>
+        <h2 id="h-rev">Lo que dicen quienes ya descansan mejor</h2>
       </div>
-    </div>
-  </section>
+      <div class="reviews">
+        <div><div class="score" id="revScore"></div><div class="stars" id="revStars" aria-hidden="true"></div><div class="note" id="revCount"></div><div class="bars" id="bars"></div></div>
+        <div id="revList"></div>
+      </div>
+    </section>
   </div>
 </div>
 
@@ -564,7 +562,7 @@ section.block,.hero{scroll-margin-top:calc(var(--hh) + 12px)}
     <div class="buy">
       <div class="eyebrow" id="eyebrow"></div>
       <h1 id="title"></h1>
-      <div class="sku"><span class="stars" aria-hidden="true">★★★★★</span> 4.8 · <a href="#reviews">reseñas</a> · SKU <span id="sku"></span></div>
+      <div class="sku"><span id="rating" hidden><span class="stars" aria-hidden="true" id="ratingStars"></span> <span id="ratingText"></span> · </span>SKU <span id="sku"></span></div>
       <div class="chips" id="chips"></div>
       <div>
         <div class="price"><span class="now" id="priceNow"></span><span class="was" id="priceWas"></span><span class="off" id="priceOff"></span></div>
@@ -646,6 +644,7 @@ section.block,.hero{scroll-margin-top:calc(var(--hh) + 12px)}
       <button type="button" data-p="productos">Productos</button>
       <button type="button" data-p="pedidos">Pedidos <span class="count" id="newOrders" hidden></span></button>
       <button type="button" data-p="clientes">Asesor y clientes <span class="count" id="newLeads" hidden></span></button>
+      <button type="button" data-p="resenas">Reseñas</button>
       <button type="button" data-p="descuentos">Descuentos</button>
       <hr>
       <button type="button" data-p="apariencia">Apariencia</button>
@@ -776,7 +775,7 @@ const CARE_COMMON = ["Garantía por defectos de fabricación según la ficha de 
 let SETTINGS = clone(DEFAULT_SETTINGS);
 let PRODUCTS = clone(DEFAULT_PRODUCTS);
 let DISCOUNTS = [];
-let ORDERS = [], LEADS = [];
+let ORDERS = [], LEADS = [], REVIEWS = [], ADMIN_REVIEWS = [];
 let dbProductsLoaded = false, apiOk = true;
 let isAdmin = false, authChecked = false;
 async function api(path, opts = {}){
@@ -831,6 +830,7 @@ function renderChrome(){
   $("models").innerHTML = list.map(p => `<a href="#${esc(p.slug)}" data-k="${esc(p.slug)}"><img src="${esc(imgOf(p))}" alt=""><span>${esc(p.name)}<small>${esc(p.short||"")}</small></span></a>`).join("");
   renderCards();
   renderCompare();
+  renderReviews();
 }
 function coverOf(p){ return p.cover || imgOf(p); }
 function renderCards(){
@@ -955,6 +955,7 @@ function renderModel(){
   $("barImg").src = imgOf(m);
   document.title = `Colchón ${m.name} · ${SETTINGS.storeName || "Punto del Colchón"}`;
   renderPrice();
+  renderRating();
 }
 function renderPrice(){
   if(!m || !size) return;
@@ -1006,8 +1007,31 @@ $("infoTabs").addEventListener("click", e => {
   const t = e.target.closest("[role=tab]"); if(!t) return;
   document.querySelectorAll("#infoTabs [role=tab]").forEach(x => { x.setAttribute("aria-selected", x===t); $(x.getAttribute("aria-controls")).hidden = x!==t; });
 });
-const dist = {5:78,4:16,3:4,2:1,1:1};
-$("bars").innerHTML = [5,4,3,2,1].map(n => `<div><span>${n}★</span><span class="track"><i style="width:${dist[n]}%"></i></span><span>${dist[n]}%</span></div>`).join("");
+/* reviews (only what the owner loads in the panel) */
+const starsTxt = n => "★★★★★".slice(0, n) + "☆☆☆☆☆".slice(0, 5 - n);
+const fmtDay = d => { try { return new Date(d + "T12:00:00").toLocaleDateString("es-CO", { day:"numeric", month:"short", year:"numeric" }); } catch(e){ return d || ""; } };
+function renderReviews(){
+  const list = REVIEWS;
+  $("reviews").hidden = !list.length;
+  if(!list.length) return;
+  const avg = list.reduce((a,r) => a + (Number(r.stars)||0), 0) / list.length;
+  $("revScore").textContent = avg.toFixed(1).replace(".", ",");
+  $("revStars").textContent = starsTxt(Math.round(avg));
+  $("revCount").textContent = list.length + (list.length === 1 ? " reseña" : " reseñas");
+  $("bars").innerHTML = [5,4,3,2,1].map(n => { const c = list.filter(r => Number(r.stars) === n).length, pct = Math.round(c * 100 / list.length);
+    return `<div><span>${n}★</span><span class="track"><i style="width:${pct}%"></i></span><span>${c}</span></div>`; }).join("");
+  $("revList").innerHTML = list.slice(0, 12).map(r => { const p = bySlug(r.product);
+    return `<div class="review"><span class="stars" aria-label="${r.stars} de 5 estrellas">${starsTxt(Number(r.stars)||0)}</span> ${r.title ? `<b>${esc(r.title)}</b>` : ""}<p>${esc(r.text)}</p><small>${esc(r.name)}${r.city ? " · " + esc(r.city) : ""}${p ? " · Colchón " + esc(p.name) : ""}${r.source ? " · Reseña de " + esc(r.source) : ""}${r.date ? " · " + esc(fmtDay(r.date)) : ""}</small></div>`; }).join("");
+}
+function renderRating(){
+  if(!m) return;
+  const pr = REVIEWS.filter(r => r.product === m.slug);
+  $("rating").hidden = !pr.length;
+  if(!pr.length) return;
+  const avg = pr.reduce((a,r) => a + (Number(r.stars)||0), 0) / pr.length;
+  $("ratingStars").textContent = starsTxt(Math.round(avg));
+  $("ratingText").textContent = avg.toFixed(1).replace(".", ",") + " · " + pr.length + (pr.length === 1 ? " reseña" : " reseñas");
+}
 const q = $("qty"); const clampQ = v => Math.max(1, Math.min(10, parseInt(v)||1));
 $("minus").onclick = () => q.value = clampQ(+q.value-1);
 $("plus").onclick  = () => q.value = clampQ(+q.value+1);
@@ -1092,7 +1116,7 @@ function sizeOpts(){ const names = [...new Set(active().flatMap(p => (p.sizes||[
 function openChat(){ $("chat").hidden = false; document.body.classList.add("chat-open"); $("chatLaunch").setAttribute("aria-expanded","true"); if(!chat.started){ chat.started = true; serial(startChat); } setTimeout(() => $("chatText").focus({ preventScroll:true }), 50); }
 function closeChat(){ $("chat").hidden = true; document.body.classList.remove("chat-open"); $("chatLaunch").setAttribute("aria-expanded","false"); $("chatLaunch").focus(); }
 $("chatLaunch").onclick = openChat; $("chatClose").onclick = closeChat;
-$("chatRestart").onclick = () => { chat = { started:false, step:0, a:{}, history:[], rec:null, alts:[], free:[], busy:false }; $("chatLog").innerHTML = ""; $("chatQr").innerHTML = ""; chat.started = true; serial(startChat); };
+$("chatRestart").onclick = () => { $("chatText").placeholder = "Escribe tu pregunta…"; chat = { started:false, step:0, a:{}, history:[], rec:null, alts:[], free:[], busy:false }; $("chatLog").innerHTML = ""; $("chatQr").innerHTML = ""; chat.started = true; serial(startChat); };
 document.addEventListener("click", e => { if(e.target.closest("[data-open-chat]")){ e.preventDefault(); openChat(); } });
 document.addEventListener("keydown", e => { if(e.key === "Escape" && !$("chat").hidden) closeChat(); });
 
@@ -1117,20 +1141,41 @@ function replies(list){
 }
 function waSummaryLink(){
   const a = chat.a, p = chat.rec && bySlug(chat.rec.slug), sz = chat.rec && chat.rec.sz;
-  const msg = `Hola ${SETTINGS.storeName}, hablé con el asesor de la página.\n\nMis datos:\n• Para: ${WHO_LABEL[a.who]||"-"}\n• Duermo: ${a.pos||"-"}\n• Molestia: ${a.pain||"-"}\n• Peso aprox.: ${a.weightLabel||"-"}\n• Prefiero: ${a.firm||"-"}\n• Medida: ${a.size||"no sé"}\n• Presupuesto: ${a.budget? cop(a.budget):"sin límite"}`
+  const msg = `Hola ${SETTINGS.storeName}, hablé con el asesor de la página.\n\nMis datos:\n• Nombre: ${a.name||"-"}${a.phone ? "\n• WhatsApp: " + a.phone : ""}\n• Para: ${WHO_LABEL[a.who]||"-"}\n• Duermo: ${a.pos||"-"}\n• Molestia: ${a.pain||"-"}\n• Peso aprox.: ${a.weightLabel||"-"}\n• Prefiero: ${a.firm||"-"}\n• Medida: ${a.size||"no sé"}\n• Presupuesto: ${a.budget? cop(a.budget):"sin límite"}`
     + (chat.free.length ? `\n• Preguntas: ${chat.free.slice(-3).join(" / ")}` : "")
     + (p ? `\n\nMe recomendó: Colchón ${p.name}${sz ? " " + sz.name + " (" + sz.dims + ") a " + cop(sz.price) : ""}.` : "")
     + `\n¿Me ayudan?`;
   return waLink(msg);
 }
-const waOption = () => ({ label:"Hablar con un asesor por WhatsApp", href: waSummaryLink(), wa:true });
+const waOption = () => ({ label:"Hablar con un asesor por WhatsApp", href: waSummaryLink(), wa:true, run: markWa });
 
 async function startChat(){
   const h = new Date().getHours(), hi = h < 12 ? "¡Buenos días!" : h < 19 ? "¡Buenas tardes!" : "¡Buenas noches!";
   await bot(`${hi} Soy el asesor de descanso de ${SETTINGS.storeName}.`, 500);
   await bot("Te hago unas preguntas cortas y te digo qué colchón te va mejor. También puedes escribirme cualquier duda sobre precios, envíos o garantía.", 900);
-  await ask();
+  await askName();
 }
+async function askName(){
+  await bot("Para empezar, ¿cómo te llamas?", 500);
+  chat.awaitName = true; $("chatText").placeholder = "Escribe tu nombre…";
+  replies([{ label:"Prefiero no decirlo", run: async () => { chat.awaitName = false; $("chatText").placeholder = "Escribe tu pregunta…"; me("Prefiero no decirlo"); await bot("Sin problema.", 400); await ask(); } }]);
+}
+function cleanName(t){
+  const n = t.replace(/^(hola[,!.\s]*)?(me llamo|mi nombre es|soy|habla)\s+/i, "").replace(/[^\p{L}\s'.-]/gu, "").trim().split(/\s+/).slice(0, 3)
+    .map(w => w.charAt(0).toLocaleUpperCase("es") + w.slice(1).toLocaleLowerCase("es")).join(" ");
+  return n.slice(0, 40);
+}
+const firstName = () => chat.a.name ? chat.a.name.split(" ")[0] : "";
+async function leadCreate(extra){
+  const a = toRuleAnswers(), p = chat.rec && bySlug(chat.rec.slug), sz = chat.rec && chat.rec.sz;
+  const body = { answers: a, wa: !!(extra && extra.wa), suggestion: p ? { slug:p.slug, name:p.name, size:sz?.name||"", price:sz?.price||0, reasons:chat.rec.reasons||[], by:chat.rec.by||"reglas" } : {} };
+  try { const r = await fetch("/api/lead", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(body), keepalive:true }).then(x => x.json()); chat.leadId = r.id || null; } catch(e){}
+}
+function leadPatch(patch){
+  if(!chat.leadId) return;
+  fetch("/api/lead", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify({ id: chat.leadId, patch }), keepalive:true }).catch(() => {});
+}
+function markWa(){ if(chat.leadId) leadPatch({ wa:true, name: chat.a.name || "", phone: chat.a.phone || "" }); else leadCreate({ wa:true }); }
 async function ask(){
   const q = QUESTIONS[chat.step];
   if(!q) return recommend();
@@ -1153,7 +1198,7 @@ async function answer(q, v, l){
   if(ack) await bot(ack, 600);
   await ask();
 }
-function toRuleAnswers(){ const a = chat.a; return { weight:a.weight||null, size:a.size||"", pos:a.pos||"", pain:a.pain||"", firm:a.firm==="No sé"?"No sé":a.firm||"", who: a.who==="pareja"?"En pareja":"Solo", budget:a.budget||null, notes: chat.free.join(" / ").slice(0,400), name:"", phone:"" }; }
+function toRuleAnswers(){ const a = chat.a; return { weight:a.weight||null, size:a.size||"", pos:a.pos||"", pain:a.pain||"", firm:a.firm==="No sé"?"No sé":a.firm||"", who: a.who==="pareja"?"En pareja":"Solo", budget:a.budget||null, notes: chat.free.join(" / ").slice(0,400), name: chat.a.name||"", phone: chat.a.phone||"" }; }
 async function recommend(){
   chat.busy = true;
   await bot("Listo, con eso ya puedo recomendarte. Déjame revisar el catálogo…", 700);
@@ -1166,7 +1211,9 @@ async function recommend(){
   if(!rec){ await bot("Ahora mismo no tengo colchones disponibles para recomendar. Escríbele a un asesor y te ayuda."); replies([waOption()]); return; }
   chat.alts = ranked.map(x => x.p.slug).filter(s => s !== rec.slug);
   await showRec(rec, a);
-  saveLead({ ...a, name:"", phone:"" }, bySlug(rec.slug), chat.rec.sz, rec);
+  chat.rec.reasons = rec.reasons; chat.rec.by = rec.by;
+  if(chat.leadId){ const p = bySlug(rec.slug), sz = chat.rec.sz; leadPatch({ name: chat.a.name||"", phone: chat.a.phone||"", suggestion: { slug:p.slug, name:p.name, size:sz?.name||"", price:sz?.price||0, reasons:rec.reasons, by:rec.by } }); }
+  else await leadCreate();
 }
 async function showRec(rec, a){
   const p = bySlug(rec.slug); const sz = (p.sizes||[]).find(s => s.name === rec.size) || sizeFor(p, a);
@@ -1178,7 +1225,10 @@ async function showRec(rec, a){
     <ul>${(rec.reasons||[]).map(r => `<li>${esc(r)}</li>`).join("")}</ul>${rec.tip ? `<span class="note">${esc(rec.tip)}</span>` : ""}</div>`;
   $("chatLog").append(card); scrollLog();
   chat.history.push({ role:"assistant", content:`Recomendé el Colchón ${p.name}${sz ? " " + sz.name : ""}.` });
-  await bot("¿Qué quieres hacer ahora?", 500);
+  if(!chat.askedPhone && !chat.a.phone){
+    chat.askedPhone = true; chat.awaitPhone = true; $("chatText").placeholder = "Escribe tu número de WhatsApp…";
+    await bot(`${firstName() ? firstName() + ", si" : "Si"} quieres, escríbeme tu número de WhatsApp y un asesor te contacta con la disponibilidad. O toca el botón verde y le escribes tú.`, 700);
+  } else await bot("¿Qué quieres hacer ahora?", 500);
   afterRecReplies();
 }
 function afterRecReplies(){
@@ -1252,6 +1302,21 @@ $("chatForm").addEventListener("submit", async e => {
 });
 async function handleText(text){
   $("chatQr").innerHTML = "";
+  if(chat.awaitName){
+    chat.awaitName = false; $("chatText").placeholder = "Escribe tu pregunta…";
+    me(text); const n = cleanName(text);
+    if(n){ chat.a.name = n; leadPatch({ name:n }); await bot(`Mucho gusto, ${n.split(" ")[0]}.`, 500); }
+    else await bot("Perfecto.", 400);
+    await ask(); return;
+  }
+  const digits = text.replace(/\D/g, "");
+  if(chat.awaitPhone && digits.length >= 7 && digits.length <= 13){
+    chat.awaitPhone = false; $("chatText").placeholder = "Escribe tu pregunta…";
+    me(text); chat.a.phone = digits.replace(/^57(?=3\d{9}$)/, "");
+    if(chat.leadId) leadPatch({ phone: chat.a.phone, name: chat.a.name || "" }); else await leadCreate();
+    await bot(`Gracias${firstName() ? ", " + firstName() : ""}. Un asesor te escribe al ${chat.a.phone} muy pronto. Mientras tanto, ¿quieres hacer algo más?`, 600);
+    afterRecReplies(); return;
+  }
   me(text); chat.free.push(text.slice(0,120));
   chat.busy = true;
   let handled = false;
@@ -1300,7 +1365,7 @@ async function faq(text){
 }
 
 /* ================= dashboard ================= */
-let dpanel = "resumen", editing = null, confirmDel = null, palDraft = null;
+let dpanel = "resumen", editing = null, confirmDel = null, palDraft = null, editingReview = null;
 const P = id => $("dpanels");
 function flat(col){ return col.flatMap(d => (d.items||[]).map(x => Object.assign({ owner: d._id }, x))).sort((a,b) => String(b.at).localeCompare(String(a.at))); }
 function statusOf(o){ return o.status || "nuevo"; }
@@ -1355,10 +1420,37 @@ function renderDash(){
   if(dpanel === "clientes"){
     root.innerHTML = `<div class="dpanel">${noDb}<div class="dhead"><h1>Asesor y clientes</h1><span class="note">Respuestas del formulario del asesor y la sugerencia que recibió cada cliente.</span></div>
       <div class="card tablewrap">${LEADS.length ? `<table><thead><tr><th>Fecha</th><th>Cliente</th><th>Respuestas</th><th>Sugerencia</th></tr></thead><tbody>
-      ${LEADS.map(l => { const a = l.answers||{}, s = l.suggestion||{}; return `<tr><td>${fmtDate(l.at)}</td><td><b>${esc(a.name||"Sin nombre")}</b><br><small class="note">${esc(a.phone||"")}</small>${a.phone?`<br><a href="${esc("https://wa.me/57"+String(a.phone).replace(/\D/g,"").replace(/^57/,""))}" target="_blank" rel="noopener">Escribirle</a>`:""}</td>
+      ${LEADS.map(l => { const a = l.answers||{}, s = l.suggestion||{}; return `<tr><td>${fmtDate(l.at)}${l.wa ? '<br><span class="status activo">Pasó a WhatsApp</span>' : ""}</td><td><b>${esc(a.name||"Sin nombre")}</b><br><small class="note">${esc(a.phone||"")}</small>${a.phone?`<br><a href="${esc("https://wa.me/57"+String(a.phone).replace(/\D/g,"").replace(/^57/,""))}" target="_blank" rel="noopener">Escribirle</a>`:""}</td>
         <td><small>${esc([a.weight?a.weight+" kg":"", a.pos, a.who, a.pain, "prefiere "+(a.firm||""), a.size, a.budget?"hasta "+cop(a.budget):""].filter(Boolean).join(" · "))}${a.notes?"<br>“"+esc(a.notes)+"”":""}</small></td>
         <td><b>${esc(s.name||"")}</b> ${esc(s.size||"")}<br><small class="note">${s.by==="ia"?"Con IA":"Por reglas"}</small></td></tr>`; }).join("")}
       </tbody></table>` : `<p class="empty">Aún nadie ha usado el asesor. Las consultas aparecen aquí con los datos del cliente.</p>`}</div></div>`;
+  }
+  if(dpanel === "resenas"){
+    const r = editingReview || { stars:5, date:new Date().toISOString().slice(0,10), published:true, source:"Google" };
+    const prods = PRODUCTS.slice().sort((a,b) => (a.order||0)-(b.order||0));
+    const SOURCES = ["Google","Facebook","Instagram","WhatsApp","En la tienda","Otra"];
+    root.innerHTML = `<div class="dpanel">${noDb}<div class="dhead"><h1>Reseñas</h1><span class="note">${ADMIN_REVIEWS.filter(x=>x.published!==false).length} publicadas · ${ADMIN_REVIEWS.filter(x=>x.published===false).length} ocultas</span></div>
+      <form class="card" id="revForm" style="display:flex;flex-direction:column;gap:12px">
+        <h3>${editingReview ? "Editar reseña" : "Nueva reseña"}</h3>
+        <div class="grid3">
+          <div class="field"><label for="r-name">Nombre (como lo firmó)</label><input id="r-name" value="${esc(r.name||"")}" required></div>
+          <div class="field"><label for="r-city">Municipio</label><input id="r-city" value="${esc(r.city||"")}" placeholder="Bucaramanga"></div>
+          <div class="field"><label for="r-product">Colchón</label><select id="r-product"><option value="">General (la tienda)</option>${prods.map(p => `<option value="${esc(p.slug)}" ${p.slug===r.product?"selected":""}>${esc(p.name)}</option>`).join("")}</select></div>
+          <div class="field"><label for="r-stars">Calificación</label><select id="r-stars">${[5,4,3,2,1].map(n => `<option value="${n}" ${Number(r.stars)===n?"selected":""}>${starsTxt(n)} (${n})</option>`).join("")}</select></div>
+          <div class="field"><label for="r-date">Fecha</label><input id="r-date" type="date" value="${esc(r.date||"")}"></div>
+          <div class="field"><label for="r-source">De dónde viene</label><select id="r-source">${SOURCES.map(x => `<option ${x===r.source?"selected":""}>${x}</option>`).join("")}</select></div>
+        </div>
+        <div class="field"><label for="r-title">Título (opcional)</label><input id="r-title" value="${esc(r.title||"")}" placeholder="Ej. Se me quitó el dolor de espalda"></div>
+        <div class="field"><label for="r-text">Comentario</label><textarea id="r-text" rows="4" required>${esc(r.text||"")}</textarea></div>
+        <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="r-pub" ${r.published!==false?"checked":""}> Publicada en la tienda</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" type="submit">${editingReview ? "Guardar cambios" : "Agregar reseña"}</button>${editingReview ? '<button class="btn" type="button" id="revCancel">Cancelar</button>' : ""}</div>
+      </form>
+      <div class="card tablewrap">${ADMIN_REVIEWS.length ? `<table><thead><tr><th>Fecha</th><th>Nombre</th><th>Colchón</th><th>Calificación</th><th>Comentario</th><th>Estado</th><th></th></tr></thead><tbody>
+        ${ADMIN_REVIEWS.map(x => `<tr><td>${esc(fmtDay(x.date))}</td><td><b>${esc(x.name)}</b><br><small class="note">${esc(x.city||"")}${x.source ? " · " + esc(x.source) : ""}</small></td><td>${esc(bySlug(x.product)?.name || "General")}</td><td style="color:#e3a008;white-space:nowrap">${starsTxt(Number(x.stars)||0)}</td>
+          <td><small>${x.title ? "<b>" + esc(x.title) + "</b><br>" : ""}${esc(String(x.text||"").slice(0,140))}${String(x.text||"").length > 140 ? "…" : ""}</small></td>
+          <td><span class="status ${x.published!==false?"activo":"borrador"}">${x.published!==false?"publicada":"oculta"}</span></td>
+          <td style="white-space:nowrap"><button class="btn small" type="button" data-redit="${esc(x.id)}">Editar</button> <button class="btn small" type="button" data-rtoggle="${esc(x.id)}">${x.published!==false?"Ocultar":"Publicar"}</button> <button class="btn small danger" type="button" data-rdel="${esc(x.id)}">Eliminar</button></td></tr>`).join("")}</tbody></table>`
+        : `<p class="empty">Aún no hay reseñas. Agrega arriba las que te dejen tus clientes en Google, Facebook, WhatsApp o en la tienda. La sección de opiniones aparece en la página cuando publiques la primera.</p>`}</div></div>`;
   }
   if(dpanel === "descuentos"){
     root.innerHTML = `<div class="dpanel">${noDb}<div class="dhead"><h1>Descuentos</h1></div>
@@ -1485,6 +1577,10 @@ $("dpanels").addEventListener("click", async e => {
   if(t.id === "palReset"){ palDraft = null; applyPalette(SETTINGS.palette); renderDash(); return; }
   if(t.id === "palSave"){ const p = palDraft || SETTINGS.palette; await saveSettings({ palette: p }); palDraft = null; return; }
   if(t.id === "annSave"){ await saveSettings({ announcement: $("annText").value.trim() }); return; }
+  if(t.id === "revCancel"){ editingReview = null; renderDash(); return; }
+  if(t.dataset.redit){ editingReview = clone(ADMIN_REVIEWS.find(x => x.id === t.dataset.redit)); renderDash(); window.scrollTo({ top:0 }); return; }
+  if(t.dataset.rtoggle){ const x = ADMIN_REVIEWS.find(r => r.id === t.dataset.rtoggle); try { await admin("saveReview", { review: Object.assign({}, x, { published: x.published === false }) }); toast(x.published === false ? "Reseña publicada" : "Reseña oculta"); await loadAdmin(); } catch(err){ toast("No se pudo cambiar."); } return; }
+  if(t.dataset.rdel){ if(t.dataset.sure){ try { await admin("deleteReview", { id: t.dataset.rdel }); toast("Reseña eliminada"); if(editingReview?.id === t.dataset.rdel) editingReview = null; await loadAdmin(); } catch(err){ toast("No se pudo eliminar."); } } else { t.dataset.sure = "1"; t.textContent = "¿Seguro?"; } return; }
   if(t.dataset.dtoggle){ const d = DISCOUNTS.find(x=>x.code===t.dataset.dtoggle); try { await admin("saveDiscount", { code: d.code, pct: d.pct, active: d.active === false }); await loadAdmin(); } catch(err){ toast("No se pudo cambiar."); } return; }
   if(t.dataset.ddel){ if(t.dataset.sure){ try { await admin("deleteDiscount", { code: t.dataset.ddel }); toast("Código eliminado"); await loadAdmin(); } catch(err){ toast("No se pudo eliminar."); } } else { t.dataset.sure = "1"; t.textContent = "¿Seguro?"; } return; }
 });
@@ -1501,6 +1597,13 @@ $("dpanels").addEventListener("change", async e => {
 });
 $("dpanels").addEventListener("submit", async e => {
   e.preventDefault();
+  if(e.target.id === "revForm"){
+    const review = { id: editingReview?.id, name: $("r-name").value.trim(), city: $("r-city").value.trim(), product: $("r-product").value, stars: Number($("r-stars").value), date: $("r-date").value, source: $("r-source").value, title: $("r-title").value.trim(), text: $("r-text").value.trim(), published: $("r-pub").checked };
+    if(!review.name || !review.text){ toast("Escribe el nombre y el comentario."); return; }
+    try { await admin("saveReview", { review }); toast(editingReview ? "Reseña actualizada" : "Reseña agregada"); editingReview = null; await loadAdmin(); }
+    catch(err){ toast(err.message || "No se pudo guardar la reseña."); }
+    return;
+  }
   if(e.target.id === "discForm"){
     const code = $("d-code").value.trim().toUpperCase().replace(/[^A-Z0-9-]/g,""), pct = Math.max(1, Math.min(90, Number($("d-pct").value)||0));
     if(!code || !pct){ toast("Escribe un código y un porcentaje."); return; }
@@ -1535,6 +1638,7 @@ async function loadAdmin(){
     PRODUCTS = d.products.length ? d.products : PRODUCTS; dbProductsLoaded = !!d.products.length;
     if(d.settings) SETTINGS = Object.assign(clone(DEFAULT_SETTINGS), d.settings);
     DISCOUNTS = d.discounts; ORDERS = d.orders; LEADS = d.leads; apiOk = true;
+    ADMIN_REVIEWS = d.reviews || []; REVIEWS = ADMIN_REVIEWS.filter(r => r.published !== false);
   } catch(e){
     if(e.status === 401){ isAdmin = false; renderGate(); return; }
     apiOk = false;
@@ -1543,7 +1647,7 @@ async function loadAdmin(){
   renderChrome(); m = null; renderModel(); drawCart();
   if(!$("dashView").hidden && isAdmin) renderDash();
 }
-$("side").addEventListener("click", e => { const b = e.target.closest("button[data-p]"); if(!b) return; dpanel = b.dataset.p; editing = null; confirmDel = null; if(dpanel !== "apariencia" && palDraft){ palDraft = null; applyPalette(SETTINGS.palette); } renderDash(); });
+$("side").addEventListener("click", e => { const b = e.target.closest("button[data-p]"); if(!b) return; dpanel = b.dataset.p; editing = null; confirmDel = null; editingReview = null; if(dpanel !== "apariencia" && palDraft){ palDraft = null; applyPalette(SETTINGS.palette); } renderDash(); });
 
 /* ================= routing ================= */
 function route(){
@@ -1593,6 +1697,7 @@ if(!m) renderModel();
     const d = await api("/api/store");
     if(d && d.products && d.products.length){ PRODUCTS = d.products; dbProductsLoaded = true; }
     if(d && d.settings) SETTINGS = Object.assign(clone(DEFAULT_SETTINGS), d.settings);
+    if(d && Array.isArray(d.reviews)) REVIEWS = d.reviews;
   } catch(e){ apiOk = false; }
   applyPalette(SETTINGS.palette); renderChrome(); m = null; renderModel(); drawCart();
   // owner session

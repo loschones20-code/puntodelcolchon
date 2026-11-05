@@ -1147,7 +1147,7 @@ function waSummaryLink(){
     + `\n¿Me ayudan?`;
   return waLink(msg);
 }
-const waOption = () => ({ label:"Hablar con un asesor por WhatsApp", href: waSummaryLink(), wa:true, run: markWa });
+const waOption = () => ({ label:"Continuar por WhatsApp", href: waSummaryLink(), wa:true, run: markWa });
 
 async function startChat(){
   const h = new Date().getHours(), hi = h < 12 ? "¡Buenos días!" : h < 19 ? "¡Buenas tardes!" : "¡Buenas noches!";
@@ -1225,9 +1225,10 @@ async function showRec(rec, a){
     <ul>${(rec.reasons||[]).map(r => `<li>${esc(r)}</li>`).join("")}</ul>${rec.tip ? `<span class="note">${esc(rec.tip)}</span>` : ""}</div>`;
   $("chatLog").append(card); scrollLog();
   chat.history.push({ role:"assistant", content:`Recomendé el Colchón ${p.name}${sz ? " " + sz.name : ""}.` });
-  if(!chat.askedPhone && !chat.a.phone){
-    chat.askedPhone = true; chat.awaitPhone = true; $("chatText").placeholder = "Escribe tu número de WhatsApp…";
-    await bot(`${firstName() ? firstName() + ", si" : "Si"} quieres, escríbeme tu número de WhatsApp y un asesor te contacta con la disponibilidad. O toca el botón verde y le escribes tú.`, 700);
+  if(!chat.ctaShown){
+    chat.ctaShown = true;
+    await bot(`¡Listo${firstName() ? ", " + firstName() : ""}! Ya tenemos tu colchón ideal.`, 600);
+    await bot("El último paso es continuar por WhatsApp: toca el botón verde y envía el mensaje que ya te dejé escrito. Así queda registrada tu información y un asesor de Punto del Colchón estará atento para confirmarte disponibilidad, precio final y fecha de entrega.", 900);
   } else await bot("¿Qué quieres hacer ahora?", 500);
   afterRecReplies();
 }
@@ -1354,7 +1355,7 @@ async function faq(text){
   else if(/pago|pagar|tarjeta|cuota|contra ?entrega|transferencia|nequi|daviplata|credito/.test(t)) ans = "Puedes pagar contra entrega, por transferencia o con tarjeta de crédito en la tienda, hasta 6 cuotas.";
   else if(/medida|tamano|king|queen|doble|sencill|semidoble|cm/.test(t)) ans = "Manejamos estas medidas:\n" + [...new Set(list.flatMap(p => (p.sizes||[]).map(s => `${s.name}: ${s.dims}`)))].join("\n");
   else if(/donde|direccion|ubica|tienda|local|horario|abren|atienden/.test(t)) ans = "Estamos en Bucaramanga, Santander. Atendemos de lunes a sábado de 9:00 a 19:00.";
-  else if(/whats|asesor|humano|persona|llamar|telefono|celular|contacto/.test(t)) ans = "Claro, te paso con un asesor de la tienda por WhatsApp. Le llega el resumen de lo que hemos hablado.";
+  else if(/whats|asesor|humano|persona|llamar|telefono|celular|contacto/.test(t)) ans = "Claro. Toca el botón verde para continuar por WhatsApp: le llega a un asesor el resumen de lo que hemos hablado y estará atento para seguir atendiéndote.";
   else if(/dolor|espalda|columna|ortoped/.test(t)) ans = "Para dolor de espalda conviene un colchón con buen soporte. El Orion y el Sueño Flex son ortopédicos, y el Támesis es extra firme. Con las preguntas te digo cuál te va mejor.";
   else if(/hola|buenas|buenos/.test(t)) ans = "¡Hola! Con gusto te ayudo.";
   else if(/gracias/.test(t)) ans = "¡Con gusto! Aquí estoy si necesitas algo más.";

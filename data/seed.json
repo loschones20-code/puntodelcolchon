@@ -167,7 +167,8 @@
       "compare": {
         "caras": "Dos (Sistema Flip)",
         "soporte": "Espuma 30 kg/m³ + casata"
-      }
+      },
+      "cover": "img/hero-tamesis.jpg"
     },
     {
       "slug": "orion",
@@ -311,7 +312,8 @@
       "compare": {
         "caras": "Una (1 pillow)",
         "soporte": "Doble estructura con núcleo de casata"
-      }
+      },
+      "cover": "img/hero-orion.jpg"
     },
     {
       "slug": "sueno-flex",
@@ -449,7 +451,8 @@
       "compare": {
         "caras": "Una o dos (1 ó 2 pillows)",
         "soporte": "Lámina central en casata"
-      }
+      },
+      "cover": "img/hero-sueno.jpg"
     }
   ]
 }
